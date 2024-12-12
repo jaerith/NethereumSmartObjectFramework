@@ -10,4 +10,8 @@
     <PackageReference Include="Nethereum.Web3" Version="4.26.0" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="ContractDefinition\" />
+  </ItemGroup>
+
 </Project>
