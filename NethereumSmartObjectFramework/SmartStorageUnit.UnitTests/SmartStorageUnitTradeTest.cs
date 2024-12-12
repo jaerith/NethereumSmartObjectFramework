@@ -2,7 +2,7 @@ using System.Security.Principal;
 
 using Nethereum.Web3.Accounts;
 
-using CCP.EveFrontier.SOF.SmartStorageUnit.ContractDefinition;
+using CCP.EveFrontier.SOF.SmartStorageUnit.Systems.SmartStorageUnitSystem.ContractDefinition;
 
 namespace CCP.EveFrontier.SOF.SmartStorageUnit.UnitTests
 {
