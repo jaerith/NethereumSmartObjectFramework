@@ -15,9 +15,9 @@ using Nethereum.Contracts.CQS;
 using Nethereum.Contracts.ContractHandlers;
 using Nethereum.Contracts;
 using System.Threading;
-using CCP.EveFrontier.SOF.SmartTurretSystem.Systems.SmartTurretSystem.ContractDefinition;
+using CCP.EveFrontier.SOF.SmartTurret.Systems.SmartTurretSystem.ContractDefinition;
 
-namespace CCP.EveFrontier.SOF.SmartTurretSystem.Systems.SmartTurretSystem
+namespace CCP.EveFrontier.SOF.SmartTurret.Systems.SmartTurretSystem
 {
     public class SmartTurretSystemServiceResource : SystemResource
     {

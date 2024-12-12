@@ -9,7 +9,7 @@ using Nethereum.Contracts.CQS;
 using Nethereum.Contracts;
 using System.Threading;
 
-namespace CCP.EveFrontier.SOF.SmartTurretSystem.Systems.ContractDefinition.SmartTurretSystem.ContractDefinition
+namespace CCP.EveFrontier.SOF.SmartTurret.Systems.SmartTurretSystem.ContractDefinition
 {
 
 

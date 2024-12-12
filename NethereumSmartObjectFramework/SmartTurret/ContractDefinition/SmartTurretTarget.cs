@@ -5,7 +5,7 @@ using System.Numerics;
 using Nethereum.Hex.HexTypes;
 using Nethereum.ABI.FunctionEncoding.Attributes;
 
-namespace CCP.EveFrontier.SOF.SmartTurretSystem.Systems.ContractDefinition.SmartTurretSystem.ContractDefinition
+namespace CCP.EveFrontier.SOF.SmartTurret.Systems.SmartTurretSystem.ContractDefinition
 {
     public partial class SmartTurretTarget : SmartTurretTargetBase { }
 
