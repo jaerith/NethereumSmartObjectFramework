@@ -28,6 +28,7 @@ namespace SmartTurret.UnitTests
             {
                 var privateKey = "0xac0974bec39a17e36ba4a6b4d238ff944bacb478cbed5efcae784d7bf4f2ff80";
                 var worldAddress = "0x8a791620dd6260079bf849dc5567adc3f2fdc318";
+                var smartTurretContractAddress = "0x2C67E7989e6030476B3E7803E507dC929994C2B0";
 
                 var account = new Account(privateKey);
                 var localhost = "http://localhost:8545";
@@ -41,7 +42,7 @@ namespace SmartTurret.UnitTests
                 var inMemoryStore = new InMemoryTableRepository();
                 storeLogProcessingService.ProcessAllStoreChangesAsync(inMemoryStore, null, null, CancellationToken.None);
 
-                var smartTurretService = new SmartTurretSystemService(web3, worldAddress);
+                var smartTurretService = new SmartTurretSystemService(web3, smartTurretContractAddress);
 
                 var tables = storeLogProcessingService.GetTableRecordsFromLogsAsync<TablesTableRecord>(null, null, CancellationToken.None).Result;
 
