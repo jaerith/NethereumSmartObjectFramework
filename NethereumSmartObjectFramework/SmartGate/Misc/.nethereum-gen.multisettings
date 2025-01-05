@@ -1,0 +1,33 @@
+[
+    {
+        "paths": ["./mud.config.ts"],
+        "generatorConfigs": [
+            {
+                "baseNamespace": "CCP.EveFrontier.SOF.SmartGate.Tables",
+                "basePath": "codeGen/SmartGate/CCP.EveFrontier.SOF.SmartGate.Tables",
+                "codeGenLang": 0,
+                "generatorType": "MudTables",
+                "mudNamespace": "eveworld"
+            }
+        ]
+    },
+    {
+        "paths": ["out/SmartGateSystem.sol/SmartGateSystem.json"],
+        "generatorConfigs": [
+            {
+                "baseNamespace": "CCP.EveFrontier.SOF.SmartGate.Systems",
+                "basePath": "codeGen/SmartGate/CCP.EveFrontier.SOF.SmartGate.Systems",
+                "codeGenLang": 0, 
+                "generatorType": "ContractDefinition",
+                "mudNamespace": "eveworld"
+            },
+            {
+                "baseNamespace": "CCP.EveFrontier.SOF.SmartGate.Systems",
+                "basePath": "codeGen/SmartGate/CCP.EveFrontier.SOF.SmartGate.Systems",
+                "codeGenLang": 0,
+                "generatorType": "MudExtendedService", 
+                "mudNamespace": "eveworld"
+            }
+        ]
+    }
+]
