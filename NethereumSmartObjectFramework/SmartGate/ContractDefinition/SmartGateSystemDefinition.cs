@@ -27,7 +27,7 @@ namespace CCP.EveFrontier.SOF.SmartGate.Systems.SmartGateSystem.ContractDefiniti
 
     public partial class MsgSenderFunction : MsgSenderFunctionBase { }
 
-    [Function("_msgSender", "address")]
+    [Function("eveworld___msgSender", "address")]
     public class MsgSenderFunctionBase : FunctionMessage
     {
 
@@ -35,7 +35,7 @@ namespace CCP.EveFrontier.SOF.SmartGate.Systems.SmartGateSystem.ContractDefiniti
 
     public partial class MsgValueFunction : MsgValueFunctionBase { }
 
-    [Function("_msgValue", "uint256")]
+    [Function("eveworld___msgValue", "uint256")]
     public class MsgValueFunctionBase : FunctionMessage
     {
 
@@ -43,7 +43,7 @@ namespace CCP.EveFrontier.SOF.SmartGate.Systems.SmartGateSystem.ContractDefiniti
 
     public partial class WorldFunction : WorldFunctionBase { }
 
-    [Function("_world", "address")]
+    [Function("eveworld___world", "address")]
     public class WorldFunctionBase : FunctionMessage
     {
 
@@ -51,7 +51,7 @@ namespace CCP.EveFrontier.SOF.SmartGate.Systems.SmartGateSystem.ContractDefiniti
 
     public partial class CanJumpFunction : CanJumpFunctionBase { }
 
-    [Function("canJump", "bool")]
+    [Function("eveworld__canJump", "bool")]
     public class CanJumpFunctionBase : FunctionMessage
     {
         [Parameter("uint256", "characterId", 1)]
@@ -64,7 +64,7 @@ namespace CCP.EveFrontier.SOF.SmartGate.Systems.SmartGateSystem.ContractDefiniti
 
     public partial class SetAllowedCorpFunction : SetAllowedCorpFunctionBase { }
 
-    [Function("setAllowedCorp")]
+    [Function("eveworld__setAllowedCorp")]
     public class SetAllowedCorpFunctionBase : FunctionMessage
     {
         [Parameter("uint256", "sourceGateId", 1)]
@@ -75,7 +75,7 @@ namespace CCP.EveFrontier.SOF.SmartGate.Systems.SmartGateSystem.ContractDefiniti
 
     public partial class SupportsInterfaceFunction : SupportsInterfaceFunctionBase { }
 
-    [Function("supportsInterface", "bool")]
+    [Function("eveworld__supportsInterface", "bool")]
     public class SupportsInterfaceFunctionBase : FunctionMessage
     {
         [Parameter("bytes4", "interfaceId", 1)]
@@ -87,13 +87,13 @@ namespace CCP.EveFrontier.SOF.SmartGate.Systems.SmartGateSystem.ContractDefiniti
     [Event("Store_SpliceStaticData")]
     public class StoreSplicestaticdataEventDTOBase : IEventDTO
     {
-        [Parameter("bytes32", "tableId", 1, true )]
+        [Parameter("bytes32", "tableId", 1, true)]
         public virtual byte[] TableId { get; set; }
-        [Parameter("bytes32[]", "keyTuple", 2, false )]
+        [Parameter("bytes32[]", "keyTuple", 2, false)]
         public virtual List<byte[]> KeyTuple { get; set; }
-        [Parameter("uint48", "start", 3, false )]
+        [Parameter("uint48", "start", 3, false)]
         public virtual ulong Start { get; set; }
-        [Parameter("bytes", "data", 4, false )]
+        [Parameter("bytes", "data", 4, false)]
         public virtual byte[] Data { get; set; }
     }
 
@@ -113,7 +113,7 @@ namespace CCP.EveFrontier.SOF.SmartGate.Systems.SmartGateSystem.ContractDefiniti
     public partial class MsgSenderOutputDTO : MsgSenderOutputDTOBase { }
 
     [FunctionOutput]
-    public class MsgSenderOutputDTOBase : IFunctionOutputDTO 
+    public class MsgSenderOutputDTOBase : IFunctionOutputDTO
     {
         [Parameter("address", "sender", 1)]
         public virtual string Sender { get; set; }
@@ -122,7 +122,7 @@ namespace CCP.EveFrontier.SOF.SmartGate.Systems.SmartGateSystem.ContractDefiniti
     public partial class MsgValueOutputDTO : MsgValueOutputDTOBase { }
 
     [FunctionOutput]
-    public class MsgValueOutputDTOBase : IFunctionOutputDTO 
+    public class MsgValueOutputDTOBase : IFunctionOutputDTO
     {
         [Parameter("uint256", "value", 1)]
         public virtual BigInteger Value { get; set; }
@@ -131,7 +131,7 @@ namespace CCP.EveFrontier.SOF.SmartGate.Systems.SmartGateSystem.ContractDefiniti
     public partial class WorldOutputDTO : WorldOutputDTOBase { }
 
     [FunctionOutput]
-    public class WorldOutputDTOBase : IFunctionOutputDTO 
+    public class WorldOutputDTOBase : IFunctionOutputDTO
     {
         [Parameter("address", "", 1)]
         public virtual string ReturnValue1 { get; set; }
@@ -140,20 +140,19 @@ namespace CCP.EveFrontier.SOF.SmartGate.Systems.SmartGateSystem.ContractDefiniti
     public partial class CanJumpOutputDTO : CanJumpOutputDTOBase { }
 
     [FunctionOutput]
-    public class CanJumpOutputDTOBase : IFunctionOutputDTO 
+    public class CanJumpOutputDTOBase : IFunctionOutputDTO
     {
         [Parameter("bool", "", 1)]
         public virtual bool ReturnValue1 { get; set; }
     }
-
-
 
     public partial class SupportsInterfaceOutputDTO : SupportsInterfaceOutputDTOBase { }
 
     [FunctionOutput]
-    public class SupportsInterfaceOutputDTOBase : IFunctionOutputDTO 
+    public class SupportsInterfaceOutputDTOBase : IFunctionOutputDTO
     {
         [Parameter("bool", "", 1)]
         public virtual bool ReturnValue1 { get; set; }
     }
+
 }
