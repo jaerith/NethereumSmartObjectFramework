@@ -29,7 +29,7 @@ namespace CCP.EveFrontier.SOF.SmartStorageUnit.Systems.SmartStorageUnitSystem.Co
 
     public partial class MsgSenderFunction : MsgSenderFunctionBase { }
 
-    [Function("_msgSender", "address")]
+    [Function("eveworld___msgSender", "address")]
     public class MsgSenderFunctionBase : FunctionMessage
     {
 
@@ -37,7 +37,7 @@ namespace CCP.EveFrontier.SOF.SmartStorageUnit.Systems.SmartStorageUnitSystem.Co
 
     public partial class MsgValueFunction : MsgValueFunctionBase { }
 
-    [Function("_msgValue", "uint256")]
+    [Function("eveworld___msgValue", "uint256")]
     public class MsgValueFunctionBase : FunctionMessage
     {
 
@@ -45,7 +45,7 @@ namespace CCP.EveFrontier.SOF.SmartStorageUnit.Systems.SmartStorageUnitSystem.Co
 
     public partial class WorldFunction : WorldFunctionBase { }
 
-    [Function("_world", "address")]
+    [Function("eveworld___world", "address")]
     public class WorldFunctionBase : FunctionMessage
     {
 
@@ -53,7 +53,7 @@ namespace CCP.EveFrontier.SOF.SmartStorageUnit.Systems.SmartStorageUnitSystem.Co
 
     public partial class CalculateOutputFunction : CalculateOutputFunctionBase { }
 
-    [Function("calculateOutput", typeof(CalculateOutputOutputDTO))]
+    [Function("eveworld__calculateOutput", typeof(CalculateOutputOutputDTO))]
     public class CalculateOutputFunctionBase : FunctionMessage
     {
         [Parameter("uint64", "inputRatio", 1)]
@@ -66,7 +66,7 @@ namespace CCP.EveFrontier.SOF.SmartStorageUnit.Systems.SmartStorageUnitSystem.Co
 
     public partial class ExecuteFunction : ExecuteFunctionBase { }
 
-    [Function("execute")]
+    [Function("eveworld__execute")]
     public class ExecuteFunctionBase : FunctionMessage
     {
         [Parameter("uint256", "smartObjectId", 1)]
@@ -79,7 +79,7 @@ namespace CCP.EveFrontier.SOF.SmartStorageUnit.Systems.SmartStorageUnitSystem.Co
 
     public partial class SetRatioFunction : SetRatioFunctionBase { }
 
-    [Function("setRatio")]
+    [Function("eveworld__setRatio")]
     public class SetRatioFunctionBase : FunctionMessage
     {
         [Parameter("uint256", "smartObjectId", 1)]
@@ -96,7 +96,7 @@ namespace CCP.EveFrontier.SOF.SmartStorageUnit.Systems.SmartStorageUnitSystem.Co
 
     public partial class SupportsInterfaceFunction : SupportsInterfaceFunctionBase { }
 
-    [Function("supportsInterface", "bool")]
+    [Function("eveworld__supportsInterface", "bool")]
     public class SupportsInterfaceFunctionBase : FunctionMessage
     {
         [Parameter("bytes4", "interfaceId", 1)]
