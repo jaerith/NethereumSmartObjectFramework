@@ -36,14 +36,14 @@ namespace CCP.EveFrontier.SOF.SmartGate.UnitTests
         }
 
         [Fact]
-        public void TestCanJumpWithAlreadyDeployedAndConfiguredGate()
+        public async Task TestCanJumpWithAlreadyDeployedAndConfiguredGate()
         {
             try
             {
                 var privateKey   = "0xac0974bec39a17e36ba4a6b4d238ff944bacb478cbed5efcae784d7bf4f2ff80";
                 var worldAddress = "0x8a791620dd6260079bf849dc5567adc3f2fdc318";
 
-                var smartGateContractAddress = "0x942498A273888B6fa6A901f48C6440626FC9E916";
+                var smartGateContractAddress = "0xE87373529b4eC78960DEE5369AE3036603730f2F";
 
                 var account   = new Account(privateKey);
                 var localhost = "http://localhost:8545";
@@ -62,55 +62,17 @@ namespace CCP.EveFrontier.SOF.SmartGate.UnitTests
 
                 var web3 = new Nethereum.Web3.Web3(account, localhost);
 
-                #region Quick peek into MUD schema
+                var smartGateService = new SmartGateSystemService(web3, worldAddress);
 
                 var storeLogProcessingService = new StoreEventsLogProcessingService(web3, worldAddress);
                 var inMemoryStore = new InMemoryTableRepository();
-                storeLogProcessingService.ProcessAllStoreChangesAsync(inMemoryStore, null, null, CancellationToken.None);
+                await storeLogProcessingService.ProcessAllStoreChangesAsync(inMemoryStore, null, null, CancellationToken.None);
 
                 var tables = storeLogProcessingService.GetTableRecordsFromLogsAsync<TablesTableRecord>(null, null, CancellationToken.None).Result;
+                Assert.True(tables.Count() == 68);
+
                 var charactersTableSchema = tables.Where(x => x.Keys.GetTableIdResource().Name == "CharactersTable").FirstOrDefault();
-
-                #endregion
-
-                var registrationSystemService = new RegistrationSystemService(web3, worldAddress);
-
-                #region Registration
-
-                var nameSpaceReceipt =
-                    registrationSystemService
-                    .RegisterNamespaceRequestAndWaitForReceiptAsync(ResourceEncoder.EncodeNamespace("test"))
-                    .Result;
-
-                var registrationIncrementSystemReceipt = 
-                    registrationSystemService
-                    .RegisterSystemRequestAndWaitForReceiptAsync(smartGateSystemId, smartGateContractAddress, true)
-                    .Result;
-
-                #endregion
-
-                var functionSelectorsTableService = new FunctionSelectorsTableService(web3, worldAddress);
-                var registeredFunctions = functionSelectorsTableService.GetRecordsFromLogsAsync(null, null, CancellationToken.None).Result;
-                var registeredSelectors = registeredFunctions.Select(x => x.Values.SystemFunctionSelector.ToString()).ToList();
-                registeredSelectors.AddRange(new SystemDefaultFunctions().GetAllFunctionSignatures().ToList());
-
-                var smartGateService = new SmartGateSystemService(web3, worldAddress);
-
-                var functionAbis = smartGateService.GetAllFunctionABIs();
-
-                var functionSelectorsToRegister = 
-                    functionAbis.Where(x => !registeredSelectors.Any(y => y.IsTheSameHex(x.Sha3Signature))).ToList();
-
-                foreach (var functionSelectorToRegister in functionSelectorsToRegister)
-                {
-                    var registerFunction = new RegisterRootFunctionSelectorFunction();
-                    registerFunction.SystemFunctionSignature = functionSelectorToRegister.Signature;
-                    registerFunction.WorldFunctionSignature = functionSelectorToRegister.Signature;
-
-                    registerFunction.SystemId = smartGateSystemId;
-
-                    registrationSystemService.RegisterRootFunctionSelectorRequestAndWaitForReceiptAsync(registerFunction);
-                }
+                Assert.True(charactersTableSchema.Namespace == "store");
 
                 CanJumpFunction canJumpFunction =
                     new CanJumpFunction()

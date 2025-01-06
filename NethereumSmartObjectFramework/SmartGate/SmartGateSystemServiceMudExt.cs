@@ -23,7 +23,7 @@ namespace CCP.EveFrontier.SOF.SmartGate.Systems.SmartGateSystem
     {
         public SmartGateSystemServiceResource() : base("SmartGate", "SmartGateSystem") { }
     }
-    public partial class SmartGateSystemService: ISystemService<SmartGateSystemServiceResource> 
+    public partial class SmartGateSystemService : ISystemService<SmartGateSystemServiceResource>
     {
         public IResource Resource => this.GetResource();
 
@@ -34,7 +34,6 @@ namespace CCP.EveFrontier.SOF.SmartGate.Systems.SmartGateSystem
                 return this.GetSystemServiceResourceRegistration<SmartGateSystemServiceResource, SmartGateSystemService>();
             }
         }
-        
 
         public List<FunctionABI> GetSystemFunctionABIs()
         {

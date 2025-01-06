@@ -14,7 +14,7 @@ using CCP.EveFrontier.SOF.SmartGate.Systems.SmartGateSystem.ContractDefinition;
 
 namespace CCP.EveFrontier.SOF.SmartGate.Systems.SmartGateSystem
 {
-    public partial class SmartGateSystemService: ContractWeb3ServiceBase
+    public partial class SmartGateSystemService : ContractWeb3ServiceBase
     {
         public static Task<TransactionReceipt> DeployContractAndWaitForReceiptAsync(Nethereum.Web3.IWeb3 web3, SmartGateSystemDeployment smartGateSystemDeployment, CancellationTokenSource cancellationTokenSource = null)
         {
@@ -41,7 +41,7 @@ namespace CCP.EveFrontier.SOF.SmartGate.Systems.SmartGateSystem
             return ContractHandler.QueryAsync<MsgSenderFunction, string>(msgSenderFunction, blockParameter);
         }
 
-        
+
         public Task<string> MsgSenderQueryAsync(BlockParameter blockParameter = null)
         {
             return ContractHandler.QueryAsync<MsgSenderFunction, string>(null, blockParameter);
@@ -52,7 +52,7 @@ namespace CCP.EveFrontier.SOF.SmartGate.Systems.SmartGateSystem
             return ContractHandler.QueryAsync<MsgValueFunction, BigInteger>(msgValueFunction, blockParameter);
         }
 
-        
+
         public Task<BigInteger> MsgValueQueryAsync(BlockParameter blockParameter = null)
         {
             return ContractHandler.QueryAsync<MsgValueFunction, BigInteger>(null, blockParameter);
@@ -63,7 +63,7 @@ namespace CCP.EveFrontier.SOF.SmartGate.Systems.SmartGateSystem
             return ContractHandler.QueryAsync<WorldFunction, string>(worldFunction, blockParameter);
         }
 
-        
+
         public Task<string> WorldQueryAsync(BlockParameter blockParameter = null)
         {
             return ContractHandler.QueryAsync<WorldFunction, string>(null, blockParameter);
@@ -74,43 +74,43 @@ namespace CCP.EveFrontier.SOF.SmartGate.Systems.SmartGateSystem
             return ContractHandler.QueryAsync<CanJumpFunction, bool>(canJumpFunction, blockParameter);
         }
 
-        
+
         public Task<bool> CanJumpQueryAsync(BigInteger characterId, BigInteger sourceGateId, BigInteger destinationGateId, BlockParameter blockParameter = null)
         {
             var canJumpFunction = new CanJumpFunction();
-                canJumpFunction.CharacterId = characterId;
-                canJumpFunction.SourceGateId = sourceGateId;
-                canJumpFunction.DestinationGateId = destinationGateId;
-            
+            canJumpFunction.CharacterId = characterId;
+            canJumpFunction.SourceGateId = sourceGateId;
+            canJumpFunction.DestinationGateId = destinationGateId;
+
             return ContractHandler.QueryAsync<CanJumpFunction, bool>(canJumpFunction, blockParameter);
         }
 
         public Task<string> SetAllowedCorpRequestAsync(SetAllowedCorpFunction setAllowedCorpFunction)
         {
-             return ContractHandler.SendRequestAsync(setAllowedCorpFunction);
+            return ContractHandler.SendRequestAsync(setAllowedCorpFunction);
         }
 
         public Task<TransactionReceipt> SetAllowedCorpRequestAndWaitForReceiptAsync(SetAllowedCorpFunction setAllowedCorpFunction, CancellationTokenSource cancellationToken = null)
         {
-             return ContractHandler.SendRequestAndWaitForReceiptAsync(setAllowedCorpFunction, cancellationToken);
+            return ContractHandler.SendRequestAndWaitForReceiptAsync(setAllowedCorpFunction, cancellationToken);
         }
 
         public Task<string> SetAllowedCorpRequestAsync(BigInteger sourceGateId, BigInteger corpID)
         {
             var setAllowedCorpFunction = new SetAllowedCorpFunction();
-                setAllowedCorpFunction.SourceGateId = sourceGateId;
-                setAllowedCorpFunction.CorpID = corpID;
-            
-             return ContractHandler.SendRequestAsync(setAllowedCorpFunction);
+            setAllowedCorpFunction.SourceGateId = sourceGateId;
+            setAllowedCorpFunction.CorpID = corpID;
+
+            return ContractHandler.SendRequestAsync(setAllowedCorpFunction);
         }
 
         public Task<TransactionReceipt> SetAllowedCorpRequestAndWaitForReceiptAsync(BigInteger sourceGateId, BigInteger corpID, CancellationTokenSource cancellationToken = null)
         {
             var setAllowedCorpFunction = new SetAllowedCorpFunction();
-                setAllowedCorpFunction.SourceGateId = sourceGateId;
-                setAllowedCorpFunction.CorpID = corpID;
-            
-             return ContractHandler.SendRequestAndWaitForReceiptAsync(setAllowedCorpFunction, cancellationToken);
+            setAllowedCorpFunction.SourceGateId = sourceGateId;
+            setAllowedCorpFunction.CorpID = corpID;
+
+            return ContractHandler.SendRequestAndWaitForReceiptAsync(setAllowedCorpFunction, cancellationToken);
         }
 
         public Task<bool> SupportsInterfaceQueryAsync(SupportsInterfaceFunction supportsInterfaceFunction, BlockParameter blockParameter = null)
@@ -118,12 +118,12 @@ namespace CCP.EveFrontier.SOF.SmartGate.Systems.SmartGateSystem
             return ContractHandler.QueryAsync<SupportsInterfaceFunction, bool>(supportsInterfaceFunction, blockParameter);
         }
 
-        
+
         public Task<bool> SupportsInterfaceQueryAsync(byte[] interfaceId, BlockParameter blockParameter = null)
         {
             var supportsInterfaceFunction = new SupportsInterfaceFunction();
-                supportsInterfaceFunction.InterfaceId = interfaceId;
-            
+            supportsInterfaceFunction.InterfaceId = interfaceId;
+
             return ContractHandler.QueryAsync<SupportsInterfaceFunction, bool>(supportsInterfaceFunction, blockParameter);
         }
 
