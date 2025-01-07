@@ -1,0 +1,32 @@
+[
+    {
+        "paths": ["./mud.config.ts"],
+        "generatorConfigs": [
+            {
+                "baseNamespace": "CCP.EveFrontier.SOF.SmartTurret.Tables",
+                "basePath": "codeGen/SmartTurret/CCP.EveFrontier.SOF.SmartTurret.Tables",
+                "codeGenLang": 0,
+                "generatorType": "MudTables"
+            }
+        ]
+    },
+    {
+        "paths": ["out/SmartTurretSystem.sol/SmartTurretSystem.json"],
+        "generatorConfigs": [
+            {
+                "baseNamespace": "CCP.EveFrontier.SOF.SmartTurret.Systems",
+                "basePath": "codeGen/SmartTurret/CCP.EveFrontier.SOF.SmartTurret.Systems",
+                "codeGenLang": 0, 
+                "generatorType": "ContractDefinition",
+                "mudNamespace": "eveworld"
+            },
+            {
+                "baseNamespace": "CCP.EveFrontier.SOF.SmartTurret.Systems",
+                "basePath": "codeGen/SmartTurret/CCP.EveFrontier.SOF.SmartTurret.Systems",
+                "codeGenLang": 0,
+                "generatorType": "MudExtendedService", 
+                "mudNamespace": "eveworld"
+            }
+        ]
+    }
+]
