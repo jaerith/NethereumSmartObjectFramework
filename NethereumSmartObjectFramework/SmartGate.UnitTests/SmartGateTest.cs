@@ -1,25 +1,24 @@
 using System.Numerics;
 
-using Nethereum.Web3.Accounts;
 using Nethereum.Contracts;
 using Nethereum.Contracts.Create2Deployment;
 using Nethereum.Hex.HexConvertors.Extensions;
 using Nethereum.Mud.Contracts.Core.StoreEvents;
+using Nethereum.Mud.Contracts.Core.Systems;
 using Nethereum.Mud.Contracts.Store.Tables;
 using Nethereum.Mud.Contracts.World;
 using Nethereum.Mud.Contracts.World.ContractDefinition;
 using Nethereum.Mud.Contracts.World.Tables;
 using Nethereum.Mud.Contracts.World.Systems.AccessManagementSystem;
 using Nethereum.Mud.Contracts.World.Systems.RegistrationSystem;
+using Nethereum.Mud.Contracts.World.Systems.RegistrationSystem.ContractDefinition;
 using Nethereum.Mud.TableRepository;
 using Nethereum.Mud.EncodingDecoding;
 using Nethereum.Web3;
+using Nethereum.Web3.Accounts;
 
 using CCP.EveFrontier.SOF.SmartGate.Systems.SmartGateSystem;
 using CCP.EveFrontier.SOF.SmartGate.Systems.SmartGateSystem.ContractDefinition;
-using Nethereum.Mud.Contracts.Core.Systems;
-using Nethereum.Mud.Contracts.World.Systems.RegistrationSystem.ContractDefinition;
-using System.Diagnostics;
 
 namespace CCP.EveFrontier.SOF.SmartGate.UnitTests
 {
@@ -42,8 +41,6 @@ namespace CCP.EveFrontier.SOF.SmartGate.UnitTests
             {
                 var privateKey   = "0xac0974bec39a17e36ba4a6b4d238ff944bacb478cbed5efcae784d7bf4f2ff80";
                 var worldAddress = "0x8a791620dd6260079bf849dc5567adc3f2fdc318";
-
-                var smartGateContractAddress = "0xE87373529b4eC78960DEE5369AE3036603730f2F";
 
                 var account   = new Account(privateKey);
                 var localhost = "http://localhost:8545";
