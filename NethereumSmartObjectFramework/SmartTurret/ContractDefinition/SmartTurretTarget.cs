@@ -9,7 +9,7 @@ namespace CCP.EveFrontier.SOF.SmartTurret.Systems.SmartTurretSystem.ContractDefi
 {
     public partial class SmartTurretTarget : SmartTurretTargetBase { }
 
-    public class SmartTurretTargetBase 
+    public class SmartTurretTargetBase
     {
         [Parameter("uint256", "shipId", 1)]
         public virtual BigInteger ShipId { get; set; }

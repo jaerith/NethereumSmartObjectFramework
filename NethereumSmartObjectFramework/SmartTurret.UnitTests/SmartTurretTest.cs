@@ -1,7 +1,4 @@
-using System.Diagnostics;
 using System.Numerics;
-using System.Text;
-using System.Security.Principal;
 
 using Nethereum.Web3.Accounts;
 using Nethereum.Contracts.Create2Deployment;
@@ -17,7 +14,7 @@ using Nethereum.Web3;
 using CCP.EveFrontier.SOF.SmartTurret.Systems.SmartTurretSystem;
 using CCP.EveFrontier.SOF.SmartTurret.Systems.SmartTurretSystem.ContractDefinition;
 
-namespace SmartTurret.UnitTests
+namespace CCP.EveFrontier.SOF.SmartTurret.UnitTests
 {
     public class SmartTurretTest
     {
