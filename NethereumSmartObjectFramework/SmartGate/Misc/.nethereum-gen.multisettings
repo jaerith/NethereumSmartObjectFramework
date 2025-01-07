@@ -6,8 +6,7 @@
                 "baseNamespace": "CCP.EveFrontier.SOF.SmartGate.Tables",
                 "basePath": "codeGen/SmartGate/CCP.EveFrontier.SOF.SmartGate.Tables",
                 "codeGenLang": 0,
-                "generatorType": "MudTables",
-                "mudNamespace": "eveworld"
+                "generatorType": "MudTables"
             }
         ]
     },

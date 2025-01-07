@@ -6,8 +6,7 @@
                 "baseNamespace": "CCP.EveFrontier.SOF.SmartStorageUnit.Tables",
                 "basePath": "codeGen/SmartStorageUnit/CCP.EveFrontier.SOF.SmartStorageUnit.Tables",
                 "codeGenLang": 0,
-                "generatorType": "MudTables",
-                "mudNamespace": "eveworld"
+                "generatorType": "MudTables"
             }
         ]
     },
