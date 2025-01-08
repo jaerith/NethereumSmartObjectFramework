@@ -28,7 +28,7 @@ namespace CCP.EveFrontier.SOF.Toggle.Systems.ToggleSystem.ContractDefinition
 
     public partial class MsgSenderFunction : MsgSenderFunctionBase { }
 
-    [Function("_msgSender", "address")]
+    [Function("eveworld___msgSender", "address")]
     public class MsgSenderFunctionBase : FunctionMessage
     {
 
@@ -36,7 +36,7 @@ namespace CCP.EveFrontier.SOF.Toggle.Systems.ToggleSystem.ContractDefinition
 
     public partial class MsgValueFunction : MsgValueFunctionBase { }
 
-    [Function("_msgValue", "uint256")]
+    [Function("eveworld___msgValue", "uint256")]
     public class MsgValueFunctionBase : FunctionMessage
     {
 
@@ -44,7 +44,7 @@ namespace CCP.EveFrontier.SOF.Toggle.Systems.ToggleSystem.ContractDefinition
 
     public partial class WorldFunction : WorldFunctionBase { }
 
-    [Function("_world", "address")]
+    [Function("eveworld___world", "address")]
     public class WorldFunctionBase : FunctionMessage
     {
 
@@ -52,7 +52,7 @@ namespace CCP.EveFrontier.SOF.Toggle.Systems.ToggleSystem.ContractDefinition
 
     public partial class SetFalseFunction : SetFalseFunctionBase { }
 
-    [Function("setFalse")]
+    [Function("eveworld__setFalse")]
     public class SetFalseFunctionBase : FunctionMessage
     {
         [Parameter("uint256", "smartObjectId", 1)]
@@ -61,7 +61,7 @@ namespace CCP.EveFrontier.SOF.Toggle.Systems.ToggleSystem.ContractDefinition
 
     public partial class SetTrueFunction : SetTrueFunctionBase { }
 
-    [Function("setTrue")]
+    [Function("eveworld__setTrue")]
     public class SetTrueFunctionBase : FunctionMessage
     {
         [Parameter("uint256", "smartObjectId", 1)]
@@ -70,7 +70,7 @@ namespace CCP.EveFrontier.SOF.Toggle.Systems.ToggleSystem.ContractDefinition
 
     public partial class SupportsInterfaceFunction : SupportsInterfaceFunctionBase { }
 
-    [Function("supportsInterface", "bool")]
+    [Function("eveworld__supportsInterface", "bool")]
     public class SupportsInterfaceFunctionBase : FunctionMessage
     {
         [Parameter("bytes4", "interfaceId", 1)]
@@ -140,4 +140,5 @@ namespace CCP.EveFrontier.SOF.Toggle.Systems.ToggleSystem.ContractDefinition
         [Parameter("bool", "", 1)]
         public virtual bool ReturnValue1 { get; set; }
     }
+
 }
