@@ -6,4 +6,15 @@
     <Nullable>enable</Nullable>
   </PropertyGroup>
 
+  <ItemGroup>
+    <Folder Include="ContractDefinition\" />
+    <Folder Include="Misc\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Nethereum.Mud" Version="4.28.0" />
+    <PackageReference Include="Nethereum.Mud.Contracts" Version="4.28.0" />
+    <PackageReference Include="Nethereum.Web3" Version="4.28.0" />
+  </ItemGroup>
+
 </Project>
