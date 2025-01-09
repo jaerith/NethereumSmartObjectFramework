@@ -1,0 +1,32 @@
+[
+    {
+        "paths": ["./mud.config.ts"],
+        "generatorConfigs": [
+            {
+                "baseNamespace": "CCP.EveFrontier.SOF.SmartStorageUnitJaerith.Tables",
+                "basePath": "codeGen/SmartStorageUnitJaerith/CCP.EveFrontier.SOF.SmartStorageUnitJaerith.Tables",
+                "codeGenLang": 0,
+                "generatorType": "MudTables"
+            }
+        ]
+    },
+    {
+        "paths": ["out/SmartStorageUnitSystem.sol/SmartStorageUnitSystem.json"],
+        "generatorConfigs": [
+            {
+                "baseNamespace": "CCP.EveFrontier.SOF.SmartStorageUnitJaerith.Systems",
+                "basePath": "codeGen/SmartStorageUnitJaerith/CCP.EveFrontier.SOF.SmartStorageUnitJaerith.Systems",
+                "codeGenLang": 0, 
+                "generatorType": "ContractDefinition",
+                "mudNamespace": "eveworld"
+            },
+            {
+                "baseNamespace": "CCP.EveFrontier.SOF.SmartStorageUnitJaerith.Systems",
+                "basePath": "codeGen/SmartStorageUnitJaerith/CCP.EveFrontier.SOF.SmartStorageUnitJaerith.Systems",
+                "codeGenLang": 0,
+                "generatorType": "MudExtendedService", 
+                "mudNamespace": "eveworld"
+            }
+        ]
+    }
+]
