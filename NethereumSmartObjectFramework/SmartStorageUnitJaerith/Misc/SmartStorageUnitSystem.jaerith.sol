@@ -145,6 +145,10 @@ contract SmartStorageUnitSystem is System {
     return (outputAmount, remainingInput);
   }
 
+  function test() public pure returns (bool) {
+    return true;
+  }
+
   /**
    * @dev Simplify the ratio by dividing with the greatest common divisor
    * @param num Numerator of the ratio

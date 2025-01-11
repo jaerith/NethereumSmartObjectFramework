@@ -174,6 +174,17 @@ namespace CCP.EveFrontier.SOF.SmartStorageUnitJaerith.Systems.SmartStorageUnitSy
             return ContractHandler.QueryAsync<SupportsInterfaceFunction, bool>(supportsInterfaceFunction, blockParameter);
         }
 
+        public Task<bool> TestQueryAsync(TestFunction testFunction, BlockParameter blockParameter = null)
+        {
+            return ContractHandler.QueryAsync<TestFunction, bool>(testFunction, blockParameter);
+        }
+
+
+        public virtual Task<bool> TestQueryAsync(BlockParameter blockParameter = null)
+        {
+            return ContractHandler.QueryAsync<TestFunction, bool>(null, blockParameter);
+        }
+
         public override List<Type> GetAllFunctionTypes()
         {
             return new List<Type>
@@ -184,7 +195,8 @@ namespace CCP.EveFrontier.SOF.SmartStorageUnitJaerith.Systems.SmartStorageUnitSy
                 typeof(CalculateOutputFunction),
                 typeof(ExecuteFunction),
                 typeof(SetRatioFunction),
-                typeof(SupportsInterfaceFunction)
+                typeof(SupportsInterfaceFunction),
+                typeof(TestFunction)
             };
         }
 
@@ -207,4 +219,5 @@ namespace CCP.EveFrontier.SOF.SmartStorageUnitJaerith.Systems.SmartStorageUnitSy
             };
         }
     }
+
 }
