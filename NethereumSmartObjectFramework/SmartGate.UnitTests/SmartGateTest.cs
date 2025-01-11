@@ -24,9 +24,9 @@ namespace CCP.EveFrontier.SOF.SmartGate.UnitTests
 {
     public class SmartGateTest
     {
-        string OwnerPK      = "0xac0974bec39a17e36ba4a6b4d238ff944bacb478cbed5efcae784d7bf4f2ff80";
-        string WorldUrl     = "http://localhost:8545";
-        string WorldAddress = "0x8a791620dd6260079bf849dc5567adc3f2fdc318";
+        public string OwnerPK      = "0xac0974bec39a17e36ba4a6b4d238ff944bacb478cbed5efcae784d7bf4f2ff80";
+        public string WorldUrl     = "http://localhost:8545";
+        public string WorldAddress = "0x8a791620dd6260079bf849dc5567adc3f2fdc318";
 
         public WorldService GetWorldService()
         {
@@ -39,11 +39,11 @@ namespace CCP.EveFrontier.SOF.SmartGate.UnitTests
         {
             try
             {
-                var privateKey   = "0xac0974bec39a17e36ba4a6b4d238ff944bacb478cbed5efcae784d7bf4f2ff80";
-                var worldAddress = "0x8a791620dd6260079bf849dc5567adc3f2fdc318";
+                var privateKey   = OwnerPK;
+                var worldAddress = WorldAddress;
 
                 var account   = new Account(privateKey);
-                var localhost = "http://localhost:8545";
+                var localhost = WorldUrl;
 
                 var smartGateSystemId = ResourceEncoder.EncodeRootSystem("SmartGateSystem"); 
 
