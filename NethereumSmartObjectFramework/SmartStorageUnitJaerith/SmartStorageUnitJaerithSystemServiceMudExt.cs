@@ -23,7 +23,7 @@ namespace CCP.EveFrontier.SOF.SmartStorageUnitJaerith.Systems.SmartStorageUnitSy
 {
     public class SmartStorageUnitSystemServiceResource : SystemResource
     {
-        public SmartStorageUnitSystemServiceResource() : base("SmartStorageUnitSystem", "eveworld") { }
+        public SmartStorageUnitSystemServiceResource() : base("SmartStorageUnitSystem", "test") { }
     }
 
     public partial class SmartStorageUnitSystemService : ISystemService<SmartStorageUnitSystemServiceResource>
@@ -37,6 +37,7 @@ namespace CCP.EveFrontier.SOF.SmartStorageUnitJaerith.Systems.SmartStorageUnitSy
                 return this.GetSystemServiceResourceRegistration<SmartStorageUnitSystemServiceResource, SmartStorageUnitSystemService>();
             }
         }
+
 
         public virtual List<FunctionABI> GetSystemFunctionABIs()
         {
@@ -54,7 +55,6 @@ namespace CCP.EveFrontier.SOF.SmartStorageUnitJaerith.Systems.SmartStorageUnitSy
             var deployment = new SmartStorageUnitSystemDeployment();
             return create2ProxyDeployerService.DeployContractRequestAsync(deployment, deployerAddress, salt, byteCodeLibraries);
         }
-
         public virtual Task<Create2ContractDeploymentTransactionReceiptResult> DeployCreate2ContractAndWaitForReceiptAsync(string deployerAddress, string salt, ByteCodeLibrary[] byteCodeLibraries, CancellationToken cancellationToken = default)
         {
             var create2ProxyDeployerService = Web3.Eth.Create2DeterministicDeploymentProxyService;
@@ -62,4 +62,5 @@ namespace CCP.EveFrontier.SOF.SmartStorageUnitJaerith.Systems.SmartStorageUnitSy
             return create2ProxyDeployerService.DeployContractRequestAndWaitForReceiptAsync(deployment, deployerAddress, salt, byteCodeLibraries, cancellationToken);
         }
     }
+
 }
