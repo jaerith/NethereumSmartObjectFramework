@@ -24,21 +24,28 @@ namespace CCP.EveFrontier.SOF.SmartStorageUnitJaerith.UnitTests
 {
     public class SmartStorageUnitTradeTest
     {
+        public string OwnerPK      = "0xac0974bec39a17e36ba4a6b4d238ff944bacb478cbed5efcae784d7bf4f2ff80";
+        public string WorldUrl     = "http://localhost:8545";
+        public string WorldAddress = "0x8a791620dd6260079bf849dc5567adc3f2fdc318";
+
+        public string SSU_ID   = "17614304337475056394242299294383532840873792487945557467064313427436901763824";
+        public string ItemInID = "72303041834441799565597028082148290553073890313361053989246429514519533100781";
+
         [Fact]
-        public async Task TestTradeWithExistingDeployment()
+        public async Task TestTradeWithAlreadyDeployedAndConfiguredUnit()
         {
             try
             {
-                var privateKey   = "0xac0974bec39a17e36ba4a6b4d238ff944bacb478cbed5efcae784d7bf4f2ff80";
-                var worldAddress = "0x8a791620dd6260079bf849dc5567adc3f2fdc318";
+                var privateKey   = OwnerPK;
+                var worldAddress = WorldAddress;
 
                 var account   = new Account(privateKey);
-                var localhost = "http://localhost:8545";
+                var localhost = WorldUrl;
 
                 BigInteger lastBlockTransferMilestone = 0;
 
-                BigInteger ssuId    = BigInteger.Parse("17614304337475056394242299294383532840873792487945557467064313427436901763824");
-                BigInteger itemInId = BigInteger.Parse("72303041834441799565597028082148290553073890313361053989246429514519533100781");
+                BigInteger ssuId    = BigInteger.Parse(SSU_ID);
+                BigInteger itemInId = BigInteger.Parse(ItemInID);
                 ulong      quantity = 5;
 
                 var web3 = new Nethereum.Web3.Web3(account, localhost);
@@ -77,9 +84,12 @@ namespace CCP.EveFrontier.SOF.SmartStorageUnitJaerith.UnitTests
 
                 var processingHandlers = new ProcessorHandler<FilterLog>[] { tradeHandler };
 
+                // This address might need to be changed
+                var smartStorageUnitSystemAddress = "0x1EeB2e59ce76a815CceEA7D39FbD1630aD0152Cb";
+
                 var contractFilter = new NewFilterInput
                 {
-                    Address = new[] { smartStorageUnitService.ContractAddress }
+                    Address = new[] { smartStorageUnitSystemAddress }
                 };
 
                 var logsProcessor =
@@ -92,7 +102,7 @@ namespace CCP.EveFrontier.SOF.SmartStorageUnitJaerith.UnitTests
 
                 if (lastBlockTransferMilestone == 0)
                 {
-                    lastBlockTransferMilestone = latestBlockNumber.Value - 25;
+                    lastBlockTransferMilestone = latestBlockNumber.Value - 10;
                 }
 
                 if (lastBlockTransferMilestone > 0)
@@ -107,17 +117,32 @@ namespace CCP.EveFrontier.SOF.SmartStorageUnitJaerith.UnitTests
                 }
 
                 Assert.True(foundTradeLogs.Any());
+
+                var tradeEvent = foundTradeLogs[0].Event;
+
+                Assert.True(tradeEvent.SsuOwner == "0xf39Fd6e51aad88F6F4ce6aB8827279cffFb92266");
+
+                Assert.True(tradeEvent.SsuSmartObjectId == ssuId);
+
+                Assert.True(tradeEvent.CalculatedOutput == 1);
             }
             catch (SmartContractCustomErrorRevertException ex)
-            {
-                // Assert.True(e.IsCustomErrorFor<Nethereum.Mud.Contracts.World.Systems.RegistrationSystem.ContractDefinition.WorldAccessdeniedError>());
-                var error = ex.DecodeError<Nethereum.Mud.Contracts.World.Systems.RegistrationSystem.ContractDefinition.WorldAccessdeniedError>();
-                Assert.Equal("tb:world:ResourceAccess", error.Resource);
+            {               
+                if (ex.IsCustomErrorFor<Nethereum.Mud.Contracts.World.Systems.RegistrationSystem.ContractDefinition.WorldAccessdeniedError>())
+                {
+                    var error = ex.DecodeError<Nethereum.Mud.Contracts.World.Systems.RegistrationSystem.ContractDefinition.WorldAccessdeniedError>();
+                    Assert.Equal("tb:world:ResourceAccess", error.Resource);
+                }
+                else
+                {
+                    Console.WriteLine(ex);
+                }
             }
             catch (Exception ex)
             {
                 Console.WriteLine(ex);
             }
         }
+
     }
 }
