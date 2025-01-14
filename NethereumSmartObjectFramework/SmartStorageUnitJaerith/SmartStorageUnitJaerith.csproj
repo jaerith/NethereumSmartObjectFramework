@@ -7,7 +7,6 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Folder Include="ContractDefinition\" />
     <Folder Include="Misc\" />
   </ItemGroup>
 

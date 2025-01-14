@@ -20,6 +20,8 @@ using Nethereum.Web3.Accounts;
 using CCP.EveFrontier.SOF.SmartStorageUnitJaerith.Systems.SmartStorageUnitSystem;
 using CCP.EveFrontier.SOF.SmartStorageUnitJaerith.Systems.SmartStorageUnitSystem.ContractDefinition;
 
+using CCP.EveFrontier.SOF.SmartStorageUnitJaerith.Tables;
+
 namespace CCP.EveFrontier.SOF.SmartStorageUnitJaerith.UnitTests
 {
     public class SmartStorageUnitTradeTest
@@ -60,9 +62,28 @@ namespace CCP.EveFrontier.SOF.SmartStorageUnitJaerith.UnitTests
 
                 var smartStorageUnitService = new SmartStorageUnitSystemService(web3, worldAddress);
 
+
+                #region Testing Simple MUD Access to the World
+
                 var tables = storeLogProcessingService.GetTableRecordsFromLogsAsync<TablesTableRecord>(null, null, CancellationToken.None).Result;
 
                 Assert.True(tables.Count() == 68);
+
+                #endregion
+
+                #region Testing Access to MUD Tables
+
+                var ratioTableService = new RatioConfigTableService(web3, worldAddress);
+
+                var tableKey = new RatioConfigTableRecord.RatioConfigKey() { SmartObjectId = ssuId, ItemIn = itemInId };
+
+                var tableRecord = await ratioTableService.GetTableRecordAsync(tableKey);
+
+                Assert.True(tableRecord.RatioOut == 1);
+
+                #endregion
+
+                #region Testing Usage of MUD System 
 
                 CalculateOutputFunction calculateOutputFunction =
                     new CalculateOutputFunction() { InputRatio = 5, OutputRatio = 1, InputAmount = 5 };
@@ -70,6 +91,10 @@ namespace CCP.EveFrontier.SOF.SmartStorageUnitJaerith.UnitTests
                 var outputDTO = await smartStorageUnitService.CalculateOutputQueryAsync(calculateOutputFunction);
 
                 Assert.True(outputDTO.OutputAmount == 1);
+
+                #endregion
+
+                #region Testing Usage of MUD System Transactions and Capturing Generated Events
 
                 ExecuteFunction executeFunction =
                     new ExecuteFunction() { Quantity = quantity, InventoryItemIdIn = itemInId, SmartObjectId = ssuId };
@@ -125,6 +150,8 @@ namespace CCP.EveFrontier.SOF.SmartStorageUnitJaerith.UnitTests
                 Assert.True(tradeEvent.SsuSmartObjectId == ssuId);
 
                 Assert.True(tradeEvent.CalculatedOutput == 1);
+
+                #endregion
             }
             catch (SmartContractCustomErrorRevertException ex)
             {               
