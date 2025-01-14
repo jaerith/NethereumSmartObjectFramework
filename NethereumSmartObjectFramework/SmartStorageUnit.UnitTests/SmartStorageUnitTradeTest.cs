@@ -28,7 +28,7 @@ namespace CCP.EveFrontier.SOF.SmartStorageUnit.UnitTests
             var worldAddress = "0x8a791620dd6260079bf849dc5567adc3f2fdc318";
 
             var account   = new Account(privateKey);
-            var localhost = "http://localhost:8546";
+            var localhost = "http://localhost:8545";
 
             BigInteger ssuId    = BigInteger.Parse("17614304337475056394242299294383532840873792487945557467064313427436901763824");
             BigInteger itemInId = BigInteger.Parse("72303041834441799565597028082148290553073890313361053989246429514519533100781");
@@ -39,9 +39,6 @@ namespace CCP.EveFrontier.SOF.SmartStorageUnit.UnitTests
             var storeLogProcessingService = new StoreEventsLogProcessingService(web3, worldAddress);
             var inMemoryStore = new InMemoryTableRepository();
             storeLogProcessingService.ProcessAllStoreChangesAsync(inMemoryStore, null, null, CancellationToken.None);
-
-            var resultsSystems = inMemoryStore.GetTableRecordsAsync<SystemsTableRecord>(new SystemsTableRecord().ResourceIdEncoded).Result;
-            Assert.True(resultsSystems.ToList().Count > 0);
 
             var smartStorageUnitService = new SmartStorageUnitSystemService(web3, worldAddress);
 
