@@ -18,38 +18,45 @@ namespace CCP.EveFrontier.SOF.SmartTurret.UnitTests
 {
     public class SmartTurretTest
     {
+        public string OwnerPK      = "0xac0974bec39a17e36ba4a6b4d238ff944bacb478cbed5efcae784d7bf4f2ff80";
+        public string WorldUrl     = "http://localhost:8545";
+        public string WorldAddress = "0x8a791620dd6260079bf849dc5567adc3f2fdc318";
+
         [Fact]
-        public void TestInProximityWithAlreadyDeployedAndConfiguredTurret()
+        public async Task TestInProximityWithAlreadyDeployedAndConfiguredTurret()
         {
             try
             {
-                var privateKey = "0xac0974bec39a17e36ba4a6b4d238ff944bacb478cbed5efcae784d7bf4f2ff80";
-                var worldAddress = "0x8a791620dd6260079bf849dc5567adc3f2fdc318";
-                var smartTurretContractAddress = "0x2C67E7989e6030476B3E7803E507dC929994C2B0";
+                var privateKey   = OwnerPK;
+                var worldAddress = WorldAddress;
 
-                var account = new Account(privateKey);
-                var localhost = "http://localhost:8545";
+                var account   = new Account(privateKey);
+                var localhost = WorldUrl;
 
                 BigInteger smartTurretId =
                     BigInteger.Parse("9640513001323359261895106592991319872122110296371423549860904054745193604808");
+
+                BigInteger? targetCharacterId = BigInteger.Parse("1112");
 
                 var web3 = new Nethereum.Web3.Web3(account, localhost);
 
                 var storeLogProcessingService = new StoreEventsLogProcessingService(web3, worldAddress);
                 var inMemoryStore = new InMemoryTableRepository();
-                storeLogProcessingService.ProcessAllStoreChangesAsync(inMemoryStore, null, null, CancellationToken.None);
-
-                var smartTurretService = new SmartTurretSystemService(web3, smartTurretContractAddress);
+                await storeLogProcessingService.ProcessAllStoreChangesAsync(inMemoryStore, null, null, CancellationToken.None);
 
                 var tables = storeLogProcessingService.GetTableRecordsFromLogsAsync<TablesTableRecord>(null, null, CancellationToken.None).Result;
 
                 var charactersTableSchema = tables.Where(x => x.Keys.GetTableIdResource().Name == "CharactersTable").FirstOrDefault();
 
+                Assert.True(tables.Count() == 67);
+
+                var smartTurretService = new SmartTurretSystemService(web3, worldAddress);
+
                 Turret turret = new Turret() { WeaponTypeId = 1, AmmoTypeId = 1, ChargesLeft = 100 };
 
                 SmartTurretTarget turretTarget =
                     new SmartTurretTarget()
-                    { ShipId = 1, ShipTypeId = 1, CharacterId = 11112, HpRatio = 100, ShieldRatio = 100, ArmorRatio = 100 };
+                    { ShipId = 1, ShipTypeId = 1, CharacterId = (BigInteger) targetCharacterId, HpRatio = 100, ShieldRatio = 100, ArmorRatio = 100 };
 
                 List<TargetPriority> priorityQueue = new List<TargetPriority>();
                 priorityQueue.Add(new TargetPriority() { Target = turretTarget, Weight = 100 });
@@ -58,8 +65,14 @@ namespace CCP.EveFrontier.SOF.SmartTurret.UnitTests
                     new InProximityFunction()
                     { SmartTurretId = smartTurretId, CharacterId = 11111, PriorityQueue = priorityQueue, Turret = turret, TurretTarget = turretTarget };
 
-                var receipt = smartTurretService.InProximityRequestAndWaitForReceiptAsync(inProximityFunction).Result;
-                Assert.NotNull(receipt);
+                var targetPriorityCollection =
+                    await smartTurretService
+                    .ContractHandler
+                    .QueryDeserializingToObjectAsync<InProximityFunction, InProximityOutputDTO>(inProximityFunction);
+
+                Assert.True(targetPriorityCollection.UpdatedPriorityQueue.Count() > 0);
+
+                Assert.True(targetPriorityCollection.UpdatedPriorityQueue[0].Target?.CharacterId == targetCharacterId);
             }
             catch (Exception ex)
             {
