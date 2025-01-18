@@ -52,6 +52,8 @@ namespace CCP.EveFrontier.SOF.SmartTurret.UnitTests
 
                 var smartTurretService = new SmartTurretSystemService(web3, worldAddress);
 
+                #region Test for InProximity
+
                 Turret turret = new Turret() { WeaponTypeId = 1, AmmoTypeId = 1, ChargesLeft = 100 };
 
                 SmartTurretTarget turretTarget =
@@ -65,14 +67,48 @@ namespace CCP.EveFrontier.SOF.SmartTurret.UnitTests
                     new InProximityFunction()
                     { SmartTurretId = smartTurretId, CharacterId = 11111, PriorityQueue = priorityQueue, Turret = turret, TurretTarget = turretTarget };
 
-                var targetPriorityCollection =
+                var targetProximityPriorityCollection =
                     await smartTurretService
                     .ContractHandler
                     .QueryDeserializingToObjectAsync<InProximityFunction, InProximityOutputDTO>(inProximityFunction);
 
-                Assert.True(targetPriorityCollection.UpdatedPriorityQueue.Count() > 0);
+                Assert.True(targetProximityPriorityCollection.UpdatedPriorityQueue.Count() > 0);
 
-                Assert.True(targetPriorityCollection.UpdatedPriorityQueue[0].Target?.CharacterId == targetCharacterId);
+                Assert.True(targetProximityPriorityCollection.UpdatedPriorityQueue[0].Target?.CharacterId == targetCharacterId);
+
+                #endregion
+
+                #region Test for Aggression
+
+                SmartTurretTarget aggressor =
+                    new SmartTurretTarget()
+                    { ShipId = 1, ShipTypeId = 1, CharacterId = 5555, HpRatio = 100, ShieldRatio = 100, ArmorRatio = 100 };
+
+                SmartTurretTarget victim =
+                    new SmartTurretTarget()
+                    { ShipId = 1, ShipTypeId = 1, CharacterId = 6666, HpRatio = 80, ShieldRatio = 100, ArmorRatio = 100 };
+
+                AggressionFunction aggressionFunction =
+                    new AggressionFunction()
+                    {
+                        SmartTurretId = smartTurretId,
+                        CharacterId = 11111,
+                        PriorityQueue = priorityQueue,
+                        Turret = turret,
+                        Aggressor = aggressor,
+                        Victim = victim
+                    };
+
+                var targetAggressionPriorityCollection =
+                    await smartTurretService
+                    .ContractHandler
+                    .QueryDeserializingToObjectAsync<AggressionFunction, AggressionOutputDTO>(aggressionFunction);
+
+                Assert.True(targetAggressionPriorityCollection.UpdatedPriorityQueue.Count() > 0);
+
+                Assert.True(targetAggressionPriorityCollection.UpdatedPriorityQueue[0].Target?.CharacterId == targetCharacterId);
+
+                #endregion
             }
             catch (Exception ex)
             {
