@@ -11,6 +11,7 @@ using Nethereum.Mud.Contracts.Store.Tables;
 using Nethereum.Mud.Contracts.World.Systems.RegistrationSystem;
 using Nethereum.Mud.Contracts.World;
 using Nethereum.Mud.Contracts.World.Tables;
+using Nethereum.Mud.Contracts.World.Systems.RegistrationSystem.ContractDefinition;
 using Nethereum.Mud.TableRepository;
 using Nethereum.Mud.EncodingDecoding;
 using Nethereum.RPC.Eth.DTOs;
@@ -62,6 +63,30 @@ namespace CCP.EveFrontier.SOF.SmartStorageUnitJaerith.UnitTests
 
                 var smartStorageUnitService = new SmartStorageUnitSystemService(web3, worldAddress);
 
+                #region Test registering a hook
+
+                // NOTE: This address must be provided in order to properly test the hook
+                var hookContractAddress = "";
+
+                if (!String.IsNullOrEmpty(hookContractAddress))
+                {
+                    var inventorySystemId = ResourceEncoder.EncodeRootSystem("Inventory");
+
+                    byte enabledFlags = 0xFF;
+
+                    RegisterSystemHookFunction registerSystemHookFunction =
+                        new RegisterSystemHookFunction()
+                        {
+                            SystemId = inventorySystemId,
+                            HookAddress = hookContractAddress,
+                            EnabledHooksBitmap = enabledFlags
+                        };
+
+                    var registrationSystemService = new RegistrationSystemService(web3, worldAddress);
+                    await registrationSystemService.RegisterSystemHookRequestAndWaitForReceiptAsync(registerSystemHookFunction);
+                }
+
+                #endregion
 
                 #region Testing Simple MUD Access to the World
 
