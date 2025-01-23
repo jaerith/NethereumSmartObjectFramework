@@ -21,6 +21,9 @@ using Nethereum.Web3.Accounts;
 using CCP.EveFrontier.SOF.SmartStorageUnitJaerith.Systems.SmartStorageUnitSystem;
 using CCP.EveFrontier.SOF.SmartStorageUnitJaerith.Systems.SmartStorageUnitSystem.ContractDefinition;
 
+using CCP.EveFrontier.SOF.SmartStorageUnitJaerith.Hooks.InventorySystemHook;
+using CCP.EveFrontier.SOF.SmartStorageUnitJaerith.Hooks.InventorySystemHook.ContractDefinition;
+
 using CCP.EveFrontier.SOF.SmartStorageUnitJaerith.Tables;
 
 namespace CCP.EveFrontier.SOF.SmartStorageUnitJaerith.UnitTests
@@ -35,7 +38,7 @@ namespace CCP.EveFrontier.SOF.SmartStorageUnitJaerith.UnitTests
         public string ItemInID = "72303041834441799565597028082148290553073890313361053989246429514519533100781";
 
         [Fact]
-        public async Task TestTradeWithAlreadyDeployedAndConfiguredUnit()
+        public async Task TestTradeWithAlreadyDeployedAndConfiguredUnitAsync()
         {
             try
             {
@@ -65,25 +68,39 @@ namespace CCP.EveFrontier.SOF.SmartStorageUnitJaerith.UnitTests
 
                 #region Test registering a hook
 
-                // NOTE: This address must be provided in order to properly test the hook
+                // NOTE: This address can be provided in order to properly test the hook - if not provided,
+                //       the code will attempt to deploy and register the hook for you
                 var hookContractAddress = "";
 
-                if (!String.IsNullOrEmpty(hookContractAddress))
+                try
                 {
-                    var inventorySystemId = ResourceEncoder.EncodeRootSystem("Inventory");
+                    if (String.IsNullOrEmpty(hookContractAddress)) 
+                    {
+                        hookContractAddress = await DeployHookContract(web3);
+                    }
 
-                    byte enabledFlags = 0xFF;
+                    if (!String.IsNullOrEmpty(hookContractAddress))
+                    {
+                        var inventorySystemId = ResourceEncoder.EncodeSystem("eveworld", "InventorySystem");
 
-                    RegisterSystemHookFunction registerSystemHookFunction =
-                        new RegisterSystemHookFunction()
-                        {
-                            SystemId = inventorySystemId,
-                            HookAddress = hookContractAddress,
-                            EnabledHooksBitmap = enabledFlags
-                        };
+                        byte enabledFlags = 0xFF;
 
-                    var registrationSystemService = new RegistrationSystemService(web3, worldAddress);
-                    await registrationSystemService.RegisterSystemHookRequestAndWaitForReceiptAsync(registerSystemHookFunction);
+                        RegisterSystemHookFunction registerSystemHookFunction =
+                            new RegisterSystemHookFunction()
+                            {
+                                SystemId = inventorySystemId,
+                                HookAddress = hookContractAddress,
+                                EnabledHooksBitmap = enabledFlags                                
+                            };
+
+                        var registrationSystemService = new RegistrationSystemService(web3, worldAddress);
+                        await registrationSystemService.RegisterSystemHookRequestAndWaitForReceiptAsync(registerSystemHookFunction);
+                    }
+                }
+                catch (Exception ex)
+                {
+                    hookContractAddress = string.Empty;
+                    // NOTE: Do not attempt to later extract any results of the hook's activation
                 }
 
                 #endregion
@@ -129,10 +146,22 @@ namespace CCP.EveFrontier.SOF.SmartStorageUnitJaerith.UnitTests
 
                 var foundTradeLogs = new List<EventLog<TradeEventDTO>>();
 
+                var inventoryBeforeCallHookLogs = new List<EventLog<InventoryBeforeEventDTO>>();
+
+                var inventoryAfterCallHookLogs = new List<EventLog<InventoryAfterEventDTO>>();
+
                 var tradeHandler = 
                     new EventLogProcessorHandler<TradeEventDTO>(eventLog => foundTradeLogs.Add(eventLog));
 
                 var processingHandlers = new ProcessorHandler<FilterLog>[] { tradeHandler };
+
+                var beforeHookHandler =
+                    new EventLogProcessorHandler<InventoryBeforeEventDTO>(eventLog => inventoryBeforeCallHookLogs.Add(eventLog));
+
+                var afterHookHandler =
+                    new EventLogProcessorHandler<InventoryAfterEventDTO>(eventLog => inventoryAfterCallHookLogs.Add(eventLog));
+
+                var processingHookHandlers = new ProcessorHandler<FilterLog>[] { beforeHookHandler, afterHookHandler };
 
                 // This address might need to be changed
                 var smartStorageUnitSystemAddress = "0x1EeB2e59ce76a815CceEA7D39FbD1630aD0152Cb";
@@ -142,8 +171,16 @@ namespace CCP.EveFrontier.SOF.SmartStorageUnitJaerith.UnitTests
                     Address = new[] { smartStorageUnitSystemAddress }
                 };
 
+                var hookContractFilter = new NewFilterInput
+                {
+                    Address = new[] { hookContractAddress }
+                };
+
                 var logsProcessor =
                     web3.Processing.Logs.CreateProcessor(logProcessors: processingHandlers, filter: contractFilter);
+
+                var hookLogsProcessor =
+                    web3.Processing.Logs.CreateProcessor(logProcessors: processingHookHandlers, filter: hookContractFilter);
 
                 //if we need to stop the processor mid execution - call cancel on the token
                 var cancellationToken = new CancellationToken();
@@ -152,7 +189,7 @@ namespace CCP.EveFrontier.SOF.SmartStorageUnitJaerith.UnitTests
 
                 if (lastBlockTransferMilestone == 0)
                 {
-                    lastBlockTransferMilestone = latestBlockNumber.Value - 10;
+                    lastBlockTransferMilestone = latestBlockNumber.Value - 5;
                 }
 
                 if (lastBlockTransferMilestone > 0)
@@ -162,8 +199,6 @@ namespace CCP.EveFrontier.SOF.SmartStorageUnitJaerith.UnitTests
                         toBlockNumber: latestBlockNumber.Value,
                         cancellationToken: cancellationToken,
                         startAtBlockNumberIfNotProcessed: lastBlockTransferMilestone);
-
-                    lastBlockTransferMilestone = latestBlockNumber;
                 }
 
                 Assert.True(foundTradeLogs.Any());
@@ -175,6 +210,30 @@ namespace CCP.EveFrontier.SOF.SmartStorageUnitJaerith.UnitTests
                 Assert.True(tradeEvent.SsuSmartObjectId == ssuId);
 
                 Assert.True(tradeEvent.CalculatedOutput == 1);
+
+                #endregion
+
+                #region Testing Usage of Hook
+
+                if (!String.IsNullOrEmpty(hookContractAddress))
+                {
+                    if (lastBlockTransferMilestone > 0)
+                    {
+                        //crawl the required block range
+                        await hookLogsProcessor.ExecuteAsync(
+                            toBlockNumber: latestBlockNumber.Value,
+                            cancellationToken: cancellationToken,
+                            startAtBlockNumberIfNotProcessed: lastBlockTransferMilestone);
+
+                        lastBlockTransferMilestone = latestBlockNumber;
+                    }
+
+                    Assert.True(inventoryAfterCallHookLogs.Any());
+
+                    Assert.True(inventoryBeforeCallHookLogs.Any());
+
+                    Assert.True(inventoryBeforeCallHookLogs[0].Event.MsgSender == "0x7b486106bA08E2AfFEecbe28e25cDba2dE5cb63b");
+                }
 
                 #endregion
             }
@@ -194,6 +253,31 @@ namespace CCP.EveFrontier.SOF.SmartStorageUnitJaerith.UnitTests
             {
                 Console.WriteLine(ex);
             }
+        }
+
+        private async Task<string> DeployHookContract(Nethereum.Web3.Web3 web3)
+        {
+            var create2DeterministicDeploymentProxyService = web3.Eth.Create2DeterministicDeploymentProxyService;
+
+            var random = new Random();
+
+            var salt = Nethereum.Util.Sha3Keccack.Current.CalculateHash(random.Next(0, 1000000).ToString());
+
+            var proxyCreate2Deployment = 
+                await create2DeterministicDeploymentProxyService.GenerateEIP155DeterministicDeploymentUsingPreconfiguredSignatureAsync();
+
+            var addressDeployer = 
+                await create2DeterministicDeploymentProxyService.DeployProxyAndGetContractAddressAsync(proxyCreate2Deployment);
+
+            var inventoryHookDeployment = new InventorySystemHookDeployment();
+
+            var inventoryHookAddress = 
+                create2DeterministicDeploymentProxyService.CalculateCreate2Address(inventoryHookDeployment, addressDeployer, salt);
+
+            var receiptHookDeployment = 
+                await create2DeterministicDeploymentProxyService.DeployContractRequestAndWaitForReceiptAsync(inventoryHookDeployment, addressDeployer, salt);
+
+            return inventoryHookAddress;
         }
 
     }
