@@ -23,7 +23,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SmartStorageUnitJaerith", "
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SmartStorageUnitJaerith.UnitTests", "SmartStorageUnitJaerith.UnitTests\SmartStorageUnitJaerith.UnitTests.csproj", "{00B52904-D106-4F06-8F81-835C57E7B81E}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BuilderExamplesBlazorWebAssemblyApp", "BuilderExamplesBlazorWebAssemblyApp\BuilderExamplesBlazorWebAssemblyApp.csproj", "{CBEC3944-84F5-47BE-8492-8C379A8F2135}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Nethereum.Erc20.Blazor", "Nethereum.Erc20.Blazor\Nethereum.Erc20.Blazor.csproj", "{2FFEB42D-7039-4C84-A87B-719E8F799812}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ExampleProjectSiwe.Wasm", "ExampleProjectSiwe.Wasm\ExampleProjectSiwe.Wasm.csproj", "{20AE773D-2021-4DF2-BDD2-3729D05CD928}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -71,10 +73,14 @@ Global
 		{00B52904-D106-4F06-8F81-835C57E7B81E}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{00B52904-D106-4F06-8F81-835C57E7B81E}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{00B52904-D106-4F06-8F81-835C57E7B81E}.Release|Any CPU.Build.0 = Release|Any CPU
-		{CBEC3944-84F5-47BE-8492-8C379A8F2135}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{CBEC3944-84F5-47BE-8492-8C379A8F2135}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{CBEC3944-84F5-47BE-8492-8C379A8F2135}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{CBEC3944-84F5-47BE-8492-8C379A8F2135}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2FFEB42D-7039-4C84-A87B-719E8F799812}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2FFEB42D-7039-4C84-A87B-719E8F799812}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2FFEB42D-7039-4C84-A87B-719E8F799812}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2FFEB42D-7039-4C84-A87B-719E8F799812}.Release|Any CPU.Build.0 = Release|Any CPU
+		{20AE773D-2021-4DF2-BDD2-3729D05CD928}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{20AE773D-2021-4DF2-BDD2-3729D05CD928}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{20AE773D-2021-4DF2-BDD2-3729D05CD928}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{20AE773D-2021-4DF2-BDD2-3729D05CD928}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
