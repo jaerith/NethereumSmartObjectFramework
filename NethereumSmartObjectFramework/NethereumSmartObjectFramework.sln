@@ -27,6 +27,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Nethereum.Erc20.Blazor", "N
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ExampleProjectSiwe.Wasm", "ExampleProjectSiwe.Wasm\ExampleProjectSiwe.Wasm.csproj", "{20AE773D-2021-4DF2-BDD2-3729D05CD928}"
 EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ExampleProjectSiwe.RestApi", "ExampleProjectSiwe.RestApi\ExampleProjectSiwe.RestApi.csproj", "{C81018E5-5111-4E97-999F-124F5EC495B5}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -81,6 +83,10 @@ Global
 		{20AE773D-2021-4DF2-BDD2-3729D05CD928}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{20AE773D-2021-4DF2-BDD2-3729D05CD928}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{20AE773D-2021-4DF2-BDD2-3729D05CD928}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C81018E5-5111-4E97-999F-124F5EC495B5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C81018E5-5111-4E97-999F-124F5EC495B5}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C81018E5-5111-4E97-999F-124F5EC495B5}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C81018E5-5111-4E97-999F-124F5EC495B5}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
