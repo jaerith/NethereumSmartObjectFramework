@@ -6,7 +6,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-using Nethereum.Erc20.Blazor.EveFrontierModels;
+using Nethereum.Erc20.Blazor.EveFrontier;
 
 namespace Nethereum.Erc20.Blazor.EveFrontierValidators
 {

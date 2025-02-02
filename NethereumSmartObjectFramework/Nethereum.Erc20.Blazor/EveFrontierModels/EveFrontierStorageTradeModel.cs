@@ -4,7 +4,7 @@ using Nethereum.UI;
 
 using CCP.EveFrontier.SOF.SmartStorageUnitJaerith.Systems.SmartStorageUnitSystem.ContractDefinition;
 
-namespace Nethereum.Erc20.Blazor.EveFrontierModels
+namespace Nethereum.Erc20.Blazor.EveFrontier
 {
     public class EveFrontierStorageTradeModel
     {

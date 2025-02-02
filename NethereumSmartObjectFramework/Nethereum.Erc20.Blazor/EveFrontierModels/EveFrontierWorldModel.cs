@@ -2,7 +2,7 @@
 using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Components.Forms;
 
-namespace Nethereum.Erc20.Blazor.EveFrontierModels
+namespace Nethereum.Erc20.Blazor.EveFrontier
 {
     public class EveFrontierWorldModel
     {

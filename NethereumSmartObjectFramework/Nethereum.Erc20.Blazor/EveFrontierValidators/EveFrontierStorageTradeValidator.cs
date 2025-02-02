@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 using Nethereum.UI.Validation;
 using Microsoft.AspNetCore.Components;
 
-using Nethereum.Erc20.Blazor.EveFrontierModels;
+using Nethereum.Erc20.Blazor.EveFrontier;
 
 namespace Nethereum.Erc20.Blazor.EveFrontierValidators
 {
