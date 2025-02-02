@@ -20,4 +20,9 @@
     <Folder Include="wwwroot\" />
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\SmartGate\SmartGate.csproj" />
+    <ProjectReference Include="..\SmartStorageUnitJaerith\SmartStorageUnitJaerith.csproj" />
+  </ItemGroup>
+
 </Project>
