@@ -1,0 +1,117 @@
+﻿@using Nethereum.UI;
+@using FluentValidation;
+@using Accelist.FluentValidation.Blazor;
+@using Microsoft.AspNetCore.Components.Forms
+@using Microsoft.AspNetCore.Components.Authorization
+@using CCP.EveFrontier.SOF.SmartStorageUnitJaerith.Systems.SmartStorageUnitSystem.ContractDefinition;
+@inject SelectedEthereumHostProviderService selectedHostProviderService;
+
+<AuthorizeView Roles="EthereumConnected">
+    <Authorized Context="Auth">
+        <div class="card">
+            <div>Eve Frontier awaits your trade, Awakaned</div>
+            <div class="card-body">
+                <EditForm Model="tradeModel" OnValidSubmit="@TradeAsync">
+                    <FluentValidator Validator="@validator"></FluentValidator>
+                    <div class="form-group row">
+                        <label for="" class="col-sm-1 col-form-label">World Contract Address:</label>
+                        <div class="col-sm-10">
+                            <InputText id="WorldContractAddress" class="form-control" @bind-Value="tradeModel.EveFrontierWorld.Address" type="text" />
+                            <small id="WorldContractAddressHelp" class="form-text text-muted">The World contract address</small>
+                            <ValidationMessage For="() => tradeModel.EveFrontierWorld.Address"></ValidationMessage>
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label for="storageSmartObjectId" class="col-sm-1 col-form-label">Storage (Smart Object Id):</label>
+                        <div class="col-sm-10">
+                            <input id="storageSmartObjectId" class="form-control" @bind="tradeModel.StorageSmartObjectId" type="text" />
+                            <small id="storageSmartObjectIdHelp" class="form-text text-muted">The SMOID (smart object ID) of the smart storage</small>
+                            <ValidationMessage For="() => tradeModel.StorageSmartObjectId"></ValidationMessage>
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label for="itemInId" class="col-sm-1 col-form-label">Item In (Smart Object Id):</label>
+                        <div class="col-sm-10">
+                            <input id="itemInId" class="form-control" @bind="tradeModel.ItemInSmartObjectId" type="text" />
+                            <small id="itemInIdHelp" class="form-text text-muted">The SMOID (smart object ID) of the Item In</small>
+                            <ValidationMessage For="() => tradeModel.ItemInSmartObjectId"></ValidationMessage>
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label for="itemInQuantity" class="col-sm-1 col-form-label">Quantity (of Item In):</label>
+                        <div class="col-sm-10">
+                            <input id="itemInQuantity" class="form-control" @bind="tradeModel.ItemInQuantity" type="text" />
+                            <small id="itemInQuantityHelp" class="form-text text-muted">The quantity of Item In being provided</small>
+                            <ValidationMessage For="() => tradeModel.ItemInQuantity"></ValidationMessage>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <ValidationSummary></ValidationSummary>
+                    </div>
+
+                    <div class="form-group">
+                        <button type="submit" class="btn btn-primary">
+                            Submit
+                        </button>
+                    </div>
+                </EditForm>
+
+                @if (TransactionHash != null)
+                {
+                    <div>Transaction Hash= @TransactionHash</div>
+                }
+
+                @if (ErrorTransferMessage != null)
+                {
+                    <div>An error has occurred= @ErrorTransferMessage</div>
+                }
+            </div>
+        </div>
+    </Authorized>
+     <NotAuthorized>
+
+        <div>
+            Please connect to Eve Frontier!
+        </div>
+
+    </NotAuthorized>
+</AuthorizeView>
+
+@code {
+
+    Nethereum.Erc20.Blazor.EveFrontier.EveFrontierStorageTradeModel tradeModel =
+        new Nethereum.Erc20.Blazor.EveFrontier.EveFrontierStorageTradeModel();
+
+    string TransactionHash { get; set; }
+
+    string ErrorTransferMessage { get; set; }
+
+    Nethereum.Erc20.Blazor.EveFrontierValidators.EveFrontierStorageTradeValidator validator =
+        new Nethereum.Erc20.Blazor.EveFrontierValidators.EveFrontierStorageTradeValidator();
+
+    public async Task TradeAsync()
+    {
+        try
+        {
+            TransactionHash = null;
+
+            var functionExecute = tradeModel.GetExecuteFunction();
+
+            var web3 = await selectedHostProviderService.SelectedHost.GetWeb3Async();
+
+            var contractHandler = web3.Eth.GetContractTransactionHandler<ExecuteFunction>();
+
+            TransactionHash = await contractHandler.SendRequestAsync(tradeModel.EveFrontierWorld.Address, functionExecute);
+
+            this.StateHasChanged();
+        }
+        catch(Exception ex)
+        {
+            ErrorTransferMessage = ex.Message;
+            this.StateHasChanged();
+        }
+    }
+
+}
+
