@@ -13,8 +13,6 @@ namespace Nethereum.Erc20.Blazor.EveFrontier
         public EveFrontierWorldModel() { }
 
         public string Address { get; set; } = DEFAULT_WORLD_CONTRACT_ADDRESS;
-
-        public string Url { get; set; } = DEFAULT_WORLD_URL;
     }
 }
 

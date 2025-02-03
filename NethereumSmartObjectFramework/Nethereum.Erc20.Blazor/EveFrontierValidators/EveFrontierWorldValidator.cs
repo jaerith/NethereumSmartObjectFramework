@@ -15,7 +15,6 @@ namespace Nethereum.Erc20.Blazor.EveFrontierValidators
         public EveFrontierWorldValidator()
         {
             RuleFor(t => t.Address).IsEthereumAddress();
-            RuleFor(t => t.Url).IsUri();
         }
     }
 }
