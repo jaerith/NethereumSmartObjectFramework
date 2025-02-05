@@ -1,11 +1,13 @@
 ﻿@page "/"
 @using Nethereum.Erc20.Blazor;
+@using ExampleProjectSiwe.Wasm.Services;
 @implements IDisposable;
 @inject IJSRuntime jsRuntime;
 @inject SelectedEthereumHostProviderService selectedHostProviderService;
 @inject NethereumSiweAuthenticatorService _nethereumSiweAuthenticatorService;
 @inject NavigationManager _navigationManager
 @inject AuthenticationStateProvider _siweAuthenticationStateProvider;
+@using Nethereum.Web3;
 @using Nethereum.Hex.HexTypes;
 @using Nethereum.Siwe.Core
 @using ExampleProjectSiwe.Wasm.Authentication
@@ -66,7 +68,7 @@
                         <small id="selectedAccountHelp" class="form-text text-muted">Creating an unique challenge per authentication request, allows us to recover and validate what account has signed the message</small>
                         <AuthorizeView Roles="SiweAuthenticated">
                             <Authorized Context="siweAuth">
-                                <div>Welcome: @UserName</div>
+                                <div>Welcome: @UserName (with balance [@AccountBalance])</div>
                             </Authorized>
                         </AuthorizeView>
 
@@ -80,7 +82,8 @@
         </div>
         <AuthorizeView Roles="SiweAuthenticated">
              <Authorized Context="siweAuth">
-                    <Erc20Transfer></Erc20Transfer>
+                <EFSmartStorageTrade></EFSmartStorageTrade>
+                <!--<Erc20Transfer></Erc20Transfer>-->                    
              </Authorized>
         </AuthorizeView>
     </Authorized>
@@ -106,12 +109,13 @@
     string ErrorTransferMessage { get; set; }
     string ErrorAuthenticateMessage { get; set; }
     string UserName { get; set; }
+    decimal AccountBalance { get; set; }
     protected string AuthenticatedAccount { get; set; }
     IEthereumHostProvider _ethereumHostProvider;
 
     protected override void OnInitialized()
     {
-         _ethereumHostProvider = selectedHostProviderService.SelectedHost;
+        _ethereumHostProvider = selectedHostProviderService.SelectedHost;
         _ethereumHostProvider.SelectedAccountChanged += HostProvider_SelectedAccountChanged;
         _ethereumHostProvider.NetworkChanged += HostProvider_NetworkChanged;
         _ethereumHostProvider.EnabledChanged += HostProviderOnEnabledChanged;
@@ -200,6 +204,11 @@
             await ((SiweAuthenticationWasmStateProvider<User>)_siweAuthenticationStateProvider).AuthenticateAsync(SelectedAccount);
             var authState = await AuthenticationState; ;
             UserName = authState.User.FindFirst(c => c.Type.Contains(ClaimTypes.NameIdentifier))?.Value;
+
+            var web3    = await _ethereumHostProvider.GetWeb3Async();   
+            var balance = await web3.Eth.GetBalance.SendRequestAsync(UserName);
+
+            AccountBalance = Web3.Convert.FromWei(balance.Value);
         }
         catch(Exception ex)
         {
