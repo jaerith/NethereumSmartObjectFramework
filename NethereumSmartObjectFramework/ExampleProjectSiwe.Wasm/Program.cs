@@ -44,10 +44,12 @@ namespace ExampleProjectSiwe.Wasm
 
             builder.Services.AddSingleton<NethereumSiweAuthenticatorService>();
             builder.Services.AddSingleton<IAccessTokenService, LocalStorageAccessTokenService>();
+            builder.Services.AddSingleton<ITradeEventStorageService, TradeEventStorageService>();
             builder.Services.AddSingleton<SiweApiUserLoginService<User>>();
             builder.Services.AddSingleton<AuthenticationStateProvider, SiweAuthenticationWasmStateProvider<User>>();
 
             builder.Services.AddValidatorsFromAssemblyContaining<Nethereum.Erc20.Blazor.Erc20Transfer>();
+            builder.Services.AddValidatorsFromAssemblyContaining<Nethereum.Erc20.Blazor.EFSmartStorageTrade>();
 
             await builder.Build().RunAsync();
         }
