@@ -52,9 +52,15 @@
 
                     <div class="form-group">
                         <button type="submit" class="btn btn-primary">
-                            Submit
+                            Trade
                         </button>
                     </div>
+
+                    @if (TradeEventMessage != null)
+                    {
+                        <div>Trade status -> @TradeEventMessage</div>
+                    }
+
                 </EditForm>
 
                 @if (TransactionHash != null)
@@ -62,10 +68,11 @@
                     <div>Transaction Hash= @TransactionHash</div>
                 }
 
-                @if (ErrorTransferMessage != null)
+                @if (ErrorTradeMessage != null)
                 {
-                    <div>An error has occurred= @ErrorTransferMessage</div>
+                    <div>An error has occurred= @ErrorTradeMessage</div>
                 }
+
             </div>
         </div>
     </Authorized>
@@ -85,7 +92,9 @@
 
     string TransactionHash { get; set; }
 
-    string ErrorTransferMessage { get; set; }
+    string TradeEventMessage { get; set; }
+
+    string ErrorTradeMessage { get; set; }
 
     Nethereum.Erc20.Blazor.EveFrontierValidators.EveFrontierStorageTradeValidator validator =
         new Nethereum.Erc20.Blazor.EveFrontierValidators.EveFrontierStorageTradeValidator();
@@ -108,7 +117,7 @@
         }
         catch(Exception ex)
         {
-            ErrorTransferMessage = ex.Message;
+            ErrorTradeMessage = ex.Message;
             this.StateHasChanged();
         }
     }
