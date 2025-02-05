@@ -18,6 +18,8 @@ namespace Nethereum.Erc20.Blazor.EveFrontierValidators
             RuleFor(t => (long) t.ItemInQuantity).GreaterThan(0).WithMessage("Amount must be greater than 0");
 
             RuleFor(t => t.EveFrontierWorld).SetValidator(new EveFrontierWorldValidator());
+
+            RuleFor(t => t.StorageAddress).IsEthereumAddress();
         }
     }
 }

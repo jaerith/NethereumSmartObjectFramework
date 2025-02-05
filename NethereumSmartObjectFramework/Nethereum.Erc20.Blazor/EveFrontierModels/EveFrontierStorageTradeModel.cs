@@ -14,6 +14,9 @@ namespace Nethereum.Erc20.Blazor.EveFrontier
         public const string DEFAULT_ITEM_IN_SMART_OBJECT_ID =
             "72303041834441799565597028082148290553073890313361053989246429514519533100781";
 
+        public const string DEFAULT_STORAGE_ADDRESS =
+            "0x1EeB2e59ce76a815CceEA7D39FbD1630aD0152Cb";
+
         public EveFrontierWorldModel EveFrontierWorld { get; set; } = new EveFrontierWorldModel();
 
         public string StorageSmartObjectId { get; set; } = DEFAULT_STORAGE_SMART_OBJECT_ID;
@@ -21,6 +24,8 @@ namespace Nethereum.Erc20.Blazor.EveFrontier
         public string ItemInSmartObjectId { get; set; } = DEFAULT_ITEM_IN_SMART_OBJECT_ID;
 
         public ulong ItemInQuantity { get; set; }
+
+        public string StorageAddress { get; set; } = DEFAULT_STORAGE_ADDRESS;
 
         public ExecuteFunction GetExecuteFunction()
         {
