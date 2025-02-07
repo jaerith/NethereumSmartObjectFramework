@@ -13,6 +13,8 @@ namespace ExampleProjectSiwe.Wasm.Services
 {
     public class TradeEventStorageService : ITradeEventStorageService
     {
+        private object _locker = new object();
+
         private List<EventLog<TradeEventDTO>> sessionTradeLogs;
 
         public TradeEventStorageService()
@@ -54,20 +56,23 @@ namespace ExampleProjectSiwe.Wasm.Services
 
             var latestBlockNumber = await web3.Eth.Blocks.GetBlockNumber.SendRequestAsync();
 
-            var lastBlockTransferMilestone = latestBlockNumber.Value - 2;
+            var lastBlockTransferMilestone = latestBlockNumber.Value - 10;
 
             if (lastBlockTransferMilestone > 0)
             {
                 //crawl the required block range
                 await logsProcessor.ExecuteAsync(
-                    toBlockNumber: latestBlockNumber.Value + 2,
+                    toBlockNumber: latestBlockNumber.Value,
                     cancellationToken: cancellationToken,
                     startAtBlockNumberIfNotProcessed: lastBlockTransferMilestone);
             }
 
-            if (foundTradeLogs.Count > 0)
+            lock (_locker)
             {
-                sessionTradeLogs.AddRange(foundTradeLogs);
+                if (foundTradeLogs.Count > 0)
+                {
+                    sessionTradeLogs.AddRange(foundTradeLogs);
+                }
             }
         }
     }
