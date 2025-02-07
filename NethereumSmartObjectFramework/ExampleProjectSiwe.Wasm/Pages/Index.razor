@@ -3,12 +3,13 @@
 @using ExampleProjectSiwe.Wasm.Services;
 @implements IDisposable;
 @inject IJSRuntime jsRuntime;
+@inject ITradeEventStorageService _tradeEventStorageService;
 @inject SelectedEthereumHostProviderService selectedHostProviderService;
 @inject NethereumSiweAuthenticatorService _nethereumSiweAuthenticatorService;
-@inject NavigationManager _navigationManager
+@inject NavigationManager _navigationManager;
 @inject AuthenticationStateProvider _siweAuthenticationStateProvider;
-@using Nethereum.Web3;
-@using Nethereum.Hex.HexTypes;
+@using Nethereum.Web3
+@using Nethereum.Hex.HexTypes
 @using Nethereum.Siwe.Core
 @using ExampleProjectSiwe.Wasm.Authentication
 @using Microsoft.AspNetCore.Components.Authorization
@@ -82,7 +83,7 @@
         </div>
         <AuthorizeView Roles="SiweAuthenticated">
              <Authorized Context="siweAuth">
-                <EFSmartStorageTrade></EFSmartStorageTrade>
+                <EFSmartStorageTrade OnTradeSubmitted="@HandleTradeSubmitted"></EFSmartStorageTrade>
                 <!--<Erc20Transfer></Erc20Transfer>-->                    
              </Authorized>
         </AuthorizeView>
@@ -215,5 +216,14 @@
             ErrorAuthenticateMessage = ex.Message;
         }
 
+    }
+
+    async Task HandleTradeSubmitted(string smartStorageAddress)
+    {
+        var web3 = await _ethereumHostProvider.GetWeb3Async();
+
+        await _tradeEventStorageService.PullLatestTradeEvents(web3, smartStorageAddress);
+
+        StateHasChanged(); // Trigger re-render
     }
 }

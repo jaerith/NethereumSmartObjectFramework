@@ -87,6 +87,8 @@
 
 @code {
 
+    [Parameter] public EventCallback<string> OnTradeSubmitted { get; set; }
+
     Nethereum.Erc20.Blazor.EveFrontier.EveFrontierStorageTradeModel tradeModel =
         new Nethereum.Erc20.Blazor.EveFrontier.EveFrontierStorageTradeModel();
 
@@ -114,6 +116,8 @@
             TransactionHash = await contractHandler.SendRequestAsync(tradeModel.EveFrontierWorld.Address, functionExecute);
 
             this.StateHasChanged();
+
+            OnTradeSubmitted.InvokeAsync(tradeModel.StorageAddress);
         }
         catch(Exception ex)
         {
