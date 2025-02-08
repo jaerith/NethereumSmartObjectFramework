@@ -1,6 +1,149 @@
 ﻿@page "/orders"
+@using System.Numerics;
+@using Nethereum.Erc20.Blazor;
+@using ExampleProjectSiwe.Wasm.Services;
+@inject SelectedEthereumHostProviderService selectedHostProviderService;
+@inject ITradeEventStorageService _tradeEventStorageService;
+@using CCP.EveFrontier.SOF.SmartStorageUnitJaerith.Systems.SmartStorageUnitSystem.ContractDefinition;
+
 <h3>My Orders</h3>
+
+<div></div>
+
+@if (AllTradeEvents.Count > 0)
+{
+    <div class="row">
+        <table class="arrowes-table table-striped">
+            <thead>
+                <tr>
+                    <th>Smart Storage Owner</th>
+                    <th>Smart Storage Unit</th>
+                    <th>Item(s) In</th>
+                    <th>Item(s) Out</th>
+                </tr>
+            </thead>
+
+            <tbody>
+                @foreach (var tradeEvent in AllTradeEvents)
+                {
+                    <tr>
+                        <td>
+                            <b>@tradeEvent.SsuOwner</b>
+                        </td>
+                        <td>
+                            @TransformToColumnFormat(tradeEvent.SsuSmartObjectId);
+                        </td>
+                        <td>
+                            <ul class="list-unstyled">
+                                <b>@TransformToColumnFormat(tradeEvent.InventoryItemIdIn);</b>
+                            </ul>
+                            <ul class="list-unstyled"><b>@tradeEvent.CalculatedInput</b></ul>
+                        </td>
+                        <td>
+                            <ul class="list-unstyled">
+                                @TransformToColumnFormat(tradeEvent.ItemObjectIdOut);
+                            </ul>
+                            <ul class="list-unstyled">@tradeEvent.CalculatedOutput</ul>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+}
+else
+{
+    <h4>Extracting latest trade events from chain storage contract @DefaultSmartStorageContractAddress</h4>
+    <h4>Please wait a minute...</h4>
+}
 
 @code {
 
+    IEthereumHostProvider _ethereumHostProvider;
+    bool EthereumAvailable { get; set; }
+    string SelectedAccount { get; set; }
+    long SelectedChainId { get; set; }
+
+    string DefaultSmartStorageContractAddress = "0x1EeB2e59ce76a815CceEA7D39FbD1630aD0152Cb";
+
+    List<TradeEventDTO> AllTradeEvents = new List<TradeEventDTO>();
+
+    protected override void OnInitialized()
+    {
+        _ethereumHostProvider = selectedHostProviderService.SelectedHost;
+        _ethereumHostProvider.SelectedAccountChanged += HostProvider_SelectedAccountChanged;
+        _ethereumHostProvider.NetworkChanged += HostProvider_NetworkChanged;
+        _ethereumHostProvider.EnabledChanged += HostProviderOnEnabledChanged;
+
+        AllTradeEvents = _tradeEventStorageService.GetAllTradeEvents();
+
+        this.StateHasChanged();
+
+        PullLatestEvents();
+    }
+
+    public void Dispose()
+    {
+        _ethereumHostProvider.SelectedAccountChanged -= HostProvider_SelectedAccountChanged;
+        _ethereumHostProvider.NetworkChanged -= HostProvider_NetworkChanged;
+        _ethereumHostProvider.EnabledChanged -= HostProviderOnEnabledChanged;        
+    }
+
+    private async Task PullLatestEvents()
+    {
+        var web3 = await _ethereumHostProvider.GetWeb3Async();
+
+        await _tradeEventStorageService.PullLatestTradeEvents(web3, DefaultSmartStorageContractAddress);
+
+        AllTradeEvents = _tradeEventStorageService.GetAllTradeEvents();
+
+        this.StateHasChanged();
+    }
+
+    protected override async Task OnInitializedAsync()
+    {
+        EthereumAvailable = await _ethereumHostProvider.CheckProviderAvailabilityAsync();
+        if (EthereumAvailable)
+        {
+            SelectedAccount = await _ethereumHostProvider.GetProviderSelectedAccountAsync();
+            await GetChainId();
+        }
+    }
+
+    private string TransformToColumnFormat(BigInteger bigInteger)
+    {
+        var bigIntString = bigInteger.ToString();
+
+        return bigIntString.Substring(0, 4) + "..." + bigIntString.Substring(bigIntString.Length - 4);
+    }
+
+    private async Task HostProviderOnEnabledChanged(bool enabled)
+    {
+        if (enabled)
+        {
+            await GetChainId();
+            this.StateHasChanged();
+        }
+    }
+
+    private async Task GetChainId()
+    {
+        var web3 = await _ethereumHostProvider.GetWeb3Async();
+        var chainId = await web3.Eth.ChainId.SendRequestAsync();
+        SelectedChainId = (long)chainId.Value;
+    }
+
+    private async Task HostProvider_SelectedAccountChanged(string account)
+    {
+        SelectedAccount = account;
+        await GetChainId();
+        this.StateHasChanged();
+    }
+
+    private async Task HostProvider_NetworkChanged(long chainId)
+    {
+        SelectedChainId = chainId;
+        this.StateHasChanged();
+    }
+    
 }
