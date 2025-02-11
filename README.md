@@ -3,6 +3,16 @@ This project aims to create a .NET library that integrates with both the Smart O
 
 ![Authenicating](https://github.com/jaerith/NethereumSmartObjectFramework/blob/main/Screenshots/Eve_Frontier_Ethereum_Dapp_Prototype_Authenticating.png)
 
+## Running the Dapp Demo
+
+1. Run two instances of Visual Studio, both opened to the solution of this repo.
+
+2. In one instance of VS, start the REST API Server in Debug mode.
+
+3. In the other instance of VS, start the [WASM Server](Screenshots/Eve_Frontier_Ethereum_Dapp_Prototype_Launch.png) in Debug mode.
+
+4. Authenticate the current user of the Eve Vault [via the button that triggers SIWE authentication](Screenshots/Eve_Frontier_Ethereum_Dapp_Prototype_Authenticating.png).
+
 ## Dapp Projects
 
 Project Source | Description
