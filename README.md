@@ -3,7 +3,16 @@ This project aims to create a .NET library that integrates with both the Smart O
 
 ![Authenicating](https://github.com/jaerith/NethereumSmartObjectFramework/blob/main/Screenshots/Eve_Frontier_Ethereum_Dapp_Prototype_Authenticating.png)
 
-## Running the Dapp Demo
+## Dapp Demo with Nethereum, Eve Vault, and Eve Frontier
+
+### Prerequisite 
+
+[x] Install the [Eve Vault browser extension](https://docs.evefrontier.com/EveVault), making sure that the EV wallet is installed before other ones (Metamask, etc).  
+*** Unfortunately, the current version of the Nethereum.Metamask library will only target the first Metamask-compatible wallet found, instead of presenting a choice.  However, a soon-to-be-released version of Nethereum will contain an implementation of the [EIP-6963](https://eips.ethereum.org/EIPS/eip-6963) standard, allowing the wallet to be chosen.
+
+[x] Run the [Smart Storage Unit](https://github.com/projectawakening/builder-examples/tree/develop/smart-storage-unit) from the Project Awakenings repo, replacing the "SmartStorageUnitSystem.sol" contract with [this one](https://github.com/jaerith/NethereumSmartObjectFramework/blob/main/NethereumSmartObjectFramework/SmartStorageUnitJaerith/Misc/SmartStorageUnitSystem.jaerith.sol).
+
+### Steps to Run the Dapp
 
 1. Run two instances of Visual Studio, both opened to the solution of this repo.
 
@@ -11,7 +20,15 @@ This project aims to create a .NET library that integrates with both the Smart O
 
 3. In the other instance of VS, start the [WASM Server](Screenshots/Eve_Frontier_Ethereum_Dapp_Prototype_Launch.png) in Debug mode.
 
-4. Authenticate the current user of the Eve Vault [via the button that triggers SIWE authentication](Screenshots/Eve_Frontier_Ethereum_Dapp_Prototype_Authenticating.png).
+4. Validate the current user of the Eve Vault via the button that triggers the [SIWE](https://docs.login.xyz/general-information/siwe-overview) protocol, invoking the [authentication](Screenshots/Eve_Frontier_Ethereum_Dapp_Prototype_Authenticating.png) of the user.
+   
+5. Upon authentication, the trade section of the Dapp will now become [available](https://github.com/jaerith/NethereumSmartObjectFramework/blob/main/Screenshots/Eve_Frontier_Ethereum_Dapp_Prototype_Authenticated.png).
+
+6. Set the input quantity to a valid value (like 5) and then hit the Trade button.  The Dapp will then ask [to approve the trade transaction](https://github.com/jaerith/NethereumSmartObjectFramework/blob/main/Screenshots/Eve_Frontier_Ethereum_Dapp_Prototype_Approving_Trade.png), and after the trade is approved, a hash for [the accepted transaction](https://github.com/jaerith/NethereumSmartObjectFramework/blob/main/Screenshots/Eve_Frontier_Ethereum_Dapp_Prototype_Trade_Approved.png) will be generated and displayed.
+
+7. The trade will invoke an event within the smart storage contract, and you can observe these events in the Orders page (listed in the left navigation pane).  Upon entering the Orders page, you will see [a message](https://github.com/jaerith/NethereumSmartObjectFramework/blob/main/Screenshots/Eve_Frontier_Ethereum_Dapp_Prototype_Awaiting_Report.png) asking you to wait, since it takes a few seconds for the block processor to retrieve events from the chain.  However, it should eventually [display details](https://github.com/jaerith/NethereumSmartObjectFramework/blob/main/Screenshots/Eve_Frontier_Ethereum_Dapp_Prototype_Received_Report.png) about the order that you executed in your trade transaction.
+
+**Disclaimer** : It appears that the Eve Vault wallet is based on the [OneKey](https://developer.onekey.so/) package, which can currently result in an [unstable state]( https://github.com/jaerith/NethereumSmartObjectFramework/blob/main/Screenshots/Eve_Frontier_Ethereum_Dapp_Prototype_OneKey_Problem.png).  However, the next version of the Nethereum.Metamask library will also contain a fix for this issue.
 
 ## Dapp Projects
 
