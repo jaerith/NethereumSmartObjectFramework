@@ -20,7 +20,7 @@ This project aims to create a .NET library that integrates with both the Smart O
 
 3. In the other instance of VS, start the [WASM Server](Screenshots/Eve_Frontier_Ethereum_Dapp_Prototype_Launch.png) in Debug mode.  This server provides the actual Dapp.
 
-4. Validate the current user of the Eve Vault via the button that triggers the [SIWE](https://docs.login.xyz/general-information/siwe-overview) protocol, invoking the [authentication](Screenshots/Eve_Frontier_Ethereum_Dapp_Prototype_Authenticating.png) of the user.
+4. Going to the Dapp (i.e, the WASM Server page), validate the current user of the Eve Vault via the button that triggers the [SIWE](https://docs.login.xyz/general-information/siwe-overview) protocol, invoking the [authentication](Screenshots/Eve_Frontier_Ethereum_Dapp_Prototype_Authenticating.png) of the user.
    
 5. Upon authentication, the trade section of the Dapp will now become [available](https://github.com/jaerith/NethereumSmartObjectFramework/blob/main/Screenshots/Eve_Frontier_Ethereum_Dapp_Prototype_Authenticated.png).
 
