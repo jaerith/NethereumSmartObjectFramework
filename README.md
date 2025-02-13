@@ -28,7 +28,11 @@ This project aims to create a .NET library that integrates with both the Smart O
 
 7. The trade will invoke an event within the smart storage contract, and you can observe these events in the Orders page (listed in the left navigation pane).  Upon entering the Orders page, you will see [a message](https://github.com/jaerith/NethereumSmartObjectFramework/blob/main/Screenshots/Eve_Frontier_Ethereum_Dapp_Prototype_Awaiting_Report.png) asking you to wait, since it takes a few seconds for the block processor to retrieve events from the chain.  However, it should eventually [display details](https://github.com/jaerith/NethereumSmartObjectFramework/blob/main/Screenshots/Eve_Frontier_Ethereum_Dapp_Prototype_Received_Report.png) about the order that you executed in your trade transaction.
 
-**Disclaimer** : It appears that the Eve Vault wallet is based on the [OneKey](https://developer.onekey.so/) package, which can currently result in an [unstable state]( https://github.com/jaerith/NethereumSmartObjectFramework/blob/main/Screenshots/Eve_Frontier_Ethereum_Dapp_Prototype_OneKey_Problem.png).  However, the next version of the Nethereum.Metamask library will also contain a fix for this issue.
+**NOTE** : In steps 2 and 3, the ports assigned to the servers during Debug sessions could be different from the ports mentioned in the startup code for the servers - in this case, you should change the ports mentioned in the startup code.  
+
+**NOTE** : In step 7, the Orders page is looking for events from the address of the smart storage contract, which is currently hardcoded in the page.  If the smart storage address is different, then it should be updated to the address mentioned in your local chain.
+
+**Disclaimer** : It appears that the Eve Vault wallet is based on the [OneKey](https://developer.onekey.so/) package.  Repeated interaction between this wallet and the Nethereum.Metamask library can result in an [unstable state]( https://github.com/jaerith/NethereumSmartObjectFramework/blob/main/Screenshots/Eve_Frontier_Ethereum_Dapp_Prototype_OneKey_Problem.png) of the Dapp.  The only current fix for this issue is to select the "Remove wallet" option from Eve Vault (i.e., removing the EOA) and then use the "Add Wallet" option, importing the same EOA again with the recovery phrase.  This fix should only be needed temporarily, though, since the next version of the Nethereum.Metamask library will also contain a fix for this issue.
 
 ## Dapp Projects
 
