@@ -16,9 +16,9 @@ This project aims to create a .NET library that integrates with both the Smart O
 
 1. Run two instances of Visual Studio, both opened to the solution of this repo.
 
-2. In one instance of VS, start the REST API Server in Debug mode.
+2. In one instance of VS, start the REST API Server in Debug mode.  This server will provide most of the implementation for the SIWE protocol, creating and returning the JWT for authentication purposes.
 
-3. In the other instance of VS, start the [WASM Server](Screenshots/Eve_Frontier_Ethereum_Dapp_Prototype_Launch.png) in Debug mode.
+3. In the other instance of VS, start the [WASM Server](Screenshots/Eve_Frontier_Ethereum_Dapp_Prototype_Launch.png) in Debug mode.  This server provides the actual Dapp.
 
 4. Validate the current user of the Eve Vault via the button that triggers the [SIWE](https://docs.login.xyz/general-information/siwe-overview) protocol, invoking the [authentication](Screenshots/Eve_Frontier_Ethereum_Dapp_Prototype_Authenticating.png) of the user.
    
