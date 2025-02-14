@@ -1,5 +1,5 @@
 # NethereumSmartObjectFramework
-This project aims to create a .NET library that integrates with both the Smart Object Framework (used within the game Eve Frontier) and the browser wallet Eve Vault.
+This project aims to create a C# template that demonstrates integration with both the Smart Object Framework (used within the game Eve Frontier) and the browser wallet Eve Vault.
 
 ![Authenicating](https://github.com/jaerith/NethereumSmartObjectFramework/blob/main/Screenshots/Eve_Frontier_Ethereum_Dapp_Prototype_Authenticating.png)
 
