@@ -1,32 +1,70 @@
 [
-    {
-        "paths": ["./mud.config.ts"],
-        "generatorConfigs": [
-            {
-                "baseNamespace": "CCP.EveFrontier.SOF.SmartStorageUnitJaerith.Tables",
-                "basePath": "codeGen/SmartStorageUnitJaerith/CCP.EveFrontier.SOF.SmartStorageUnitJaerith.Tables",
-                "codeGenLang": 0,
-                "generatorType": "MudTables"
-            }
-        ]
-    },
-    {
-        "paths": ["out/SmartStorageUnitSystem.sol/SmartStorageUnitSystem.json"],
-        "generatorConfigs": [
-            {
-                "baseNamespace": "CCP.EveFrontier.SOF.SmartStorageUnitJaerith.Systems",
-                "basePath": "codeGen/SmartStorageUnitJaerith/CCP.EveFrontier.SOF.SmartStorageUnitJaerith.Systems",
-                "codeGenLang": 0, 
-                "generatorType": "ContractDefinition",
-                "mudNamespace": "eveworld"
-            },
-            {
-                "baseNamespace": "CCP.EveFrontier.SOF.SmartStorageUnitJaerith.Systems",
-                "basePath": "codeGen/SmartStorageUnitJaerith/CCP.EveFrontier.SOF.SmartStorageUnitJaerith.Systems",
-                "codeGenLang": 0,
-                "generatorType": "MudExtendedService", 
-                "mudNamespace": "eveworld"
-            }
-        ]
-    }
+  {
+    "paths": [ "./mud.config.ts" ],
+    "generatorConfigs": [
+      {
+        "baseNamespace": "CCP.EveFrontier.SOF.SmartStorageUnitJaerith.Tables",
+        "basePath": "codeGen/SmartStorageUnitJaerith/CCP.EveFrontier.SOF.SmartStorageUnitJaerith.Tables",
+        "codeGenLang": 0,
+        "generatorType": "MudTables"
+      }
+    ]
+  },
+  {
+    "paths": [ "out/SmartStorageUnitSystem.sol/SmartStorageUnitSystem.json" ],
+    "generatorConfigs": [
+      {
+        "baseNamespace": "CCP.EveFrontier.SOF.SmartStorageUnitJaerith.Systems",
+        "basePath": "codeGen/SmartStorageUnitJaerith/CCP.EveFrontier.SOF.SmartStorageUnitJaerith.Systems",
+        "codeGenLang": 0,
+        "generatorType": "ContractDefinition",
+        "mudNamespace": "test"
+      },
+      {
+        "baseNamespace": "CCP.EveFrontier.SOF.SmartStorageUnitJaerith.Systems",
+        "basePath": "codeGen/SmartStorageUnitJaerith/CCP.EveFrontier.SOF.SmartStorageUnitJaerith.Systems",
+        "codeGenLang": 0,
+        "generatorType": "MudExtendedService",
+        "mudNamespace": "test"
+      }
+    ]
+  },
+  {
+    "paths": [ "out/InventorySystemHook.sol/InventorySystemHook.json" ],
+    "generatorConfigs": [
+      {
+        "baseNamespace": "CCP.EveFrontier.SOF.SmartStorageUnitJaerith.Hooks",
+        "basePath": "codeGen/SmartStorageUnitJaerith/CCP.EveFrontier.SOF.SmartStorageUnitJaerith.Hooks",
+        "codeGenLang": 0,
+        "generatorType": "ContractDefinition",
+        "mudNamespace": "test"
+      },
+      {
+        "baseNamespace": "CCP.EveFrontier.SOF.SmartStorageUnitJaerith.Hooks",
+        "basePath": "codeGen/SmartStorageUnitJaerith/CCP.EveFrontier.SOF.SmartStorageUnitJaerith.Hooks",
+        "codeGenLang": 0,
+        "generatorType": "MudExtendedService",
+        "mudNamespace": "test"
+      }
+    ]
+  },
+  {
+    "paths": [ "out/ERC20System.sol/ERC20System.json" ],
+    "generatorConfigs": [
+      {
+        "baseNamespace": "CCP.EveFrontier.SOF.SmartStorageUnitJaerith.ERC20",
+        "basePath": "codeGen/SmartStorageUnitJaerith/CCP.EveFrontier.SOF.SmartStorageUnitJaerith.ERC20",
+        "codeGenLang": 0,
+        "generatorType": "ContractDefinition",
+        "mudNamespace": "GoblinKingCorp"
+      },
+      {
+        "baseNamespace": "CCP.EveFrontier.SOF.SmartStorageUnitJaerith.ERC20",
+        "basePath": "codeGen/SmartStorageUnitJaerith/CCP.EveFrontier.SOF.SmartStorageUnitJaerith.ERC20",
+        "codeGenLang": 0,
+        "generatorType": "MudExtendedService",
+        "mudNamespace": "GoblinKingCorp"
+      }
+    ]
+  }
 ]
