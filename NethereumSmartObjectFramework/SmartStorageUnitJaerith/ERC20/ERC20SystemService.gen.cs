@@ -1,15 +1,8 @@
-using System;
-using System.Threading.Tasks;
-using System.Collections.Generic;
 using System.Numerics;
-using Nethereum.Hex.HexTypes;
-using Nethereum.ABI.FunctionEncoding.Attributes;
 using Nethereum.Web3;
 using Nethereum.RPC.Eth.DTOs;
-using Nethereum.Contracts.CQS;
 using Nethereum.Contracts.ContractHandlers;
-using Nethereum.Contracts;
-using System.Threading;
+
 using CCP.EveFrontier.SOF.SmartStorageUnitJaerith.ERC20.ERC20System.ContractDefinition;
 
 namespace CCP.EveFrontier.SOF.SmartStorageUnitJaerith.ERC20.ERC20System
