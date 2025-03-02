@@ -136,7 +136,10 @@ namespace CCP.EveFrontier.SOF.SmartStorageUnitJaerith.ERC20.ERC20System.Contract
 
     }
 
-    public partial class TransferFunction : TransferFunctionBase { }
+    public partial class TransferFunction : TransferFunctionBase 
+    {
+        public const string Namespace = "GoblinKingCorp";
+    }
 
     [Function("GoblinKingCorp__transfer", "bool")]
     public class TransferFunctionBase : FunctionMessage
