@@ -2,7 +2,7 @@ using System.Numerics;
 using Nethereum.ABI.FunctionEncoding.Attributes;
 using Nethereum.Contracts;
 
-namespace CCP.EveFrontier.SOF.SmartStorageUnitJaerith.ERC20.ERC20System.ContractDefinition
+namespace CCP.EveFrontier.SOF.SmartStorageUnitJaerith.ERC20.GoblinKingCorpERC20System.ContractDefinition
 {
     public partial class ERC20SystemDeployment : ERC20SystemDeploymentBase
     {

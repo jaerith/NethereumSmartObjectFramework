@@ -7,9 +7,9 @@ using Nethereum.Contracts.Create2Deployment;
 using Nethereum.Mud;
 using Nethereum.Contracts;
 
-using CCP.EveFrontier.SOF.SmartStorageUnitJaerith.ERC20.ERC20System.ContractDefinition;
+using CCP.EveFrontier.SOF.SmartStorageUnitJaerith.ERC20.GoblinKingCorpERC20System.ContractDefinition;
 
-namespace CCP.EveFrontier.SOF.SmartStorageUnitJaerith.ERC20.ERC20System
+namespace CCP.EveFrontier.SOF.SmartStorageUnitJaerith.ERC20.GoblinKingCorpERC20System
 {
     public class ERC20SystemServiceResource : SystemResource
     {

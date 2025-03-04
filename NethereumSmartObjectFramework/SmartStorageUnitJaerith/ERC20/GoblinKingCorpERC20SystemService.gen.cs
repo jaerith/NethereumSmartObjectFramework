@@ -3,9 +3,9 @@ using Nethereum.Web3;
 using Nethereum.RPC.Eth.DTOs;
 using Nethereum.Contracts.ContractHandlers;
 
-using CCP.EveFrontier.SOF.SmartStorageUnitJaerith.ERC20.ERC20System.ContractDefinition;
+using CCP.EveFrontier.SOF.SmartStorageUnitJaerith.ERC20.GoblinKingCorpERC20System.ContractDefinition;
 
-namespace CCP.EveFrontier.SOF.SmartStorageUnitJaerith.ERC20.ERC20System
+namespace CCP.EveFrontier.SOF.SmartStorageUnitJaerith.ERC20.GoblinKingCorpERC20System
 {
     public partial class ERC20SystemService: ERC20SystemServiceBase
     {

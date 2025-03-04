@@ -1,4 +1,4 @@
-﻿using CCP.EveFrontier.SOF.SmartStorageUnitJaerith.ERC20.ERC20System.ContractDefinition;
+﻿using CCP.EveFrontier.SOF.SmartStorageUnitJaerith.ERC20.GoblinKingCorpERC20System.ContractDefinition;
 
 namespace Nethereum.Erc20.Blazor.EveFrontierModels
 {
