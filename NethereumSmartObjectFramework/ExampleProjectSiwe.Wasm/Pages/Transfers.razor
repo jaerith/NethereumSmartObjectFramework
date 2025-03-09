@@ -144,6 +144,10 @@
         if (authState != null)
         {
             UserName = authState.User.FindFirst(c => c.Type.Contains(ClaimTypes.NameIdentifier))?.Value;
+
+            var web3    = await _ethereumHostProvider.GetWeb3Async();
+            var balance = await web3.Eth.GetBalance.SendRequestAsync(UserName);
+            AccountBalance = Web3.Convert.FromWei(balance.Value);
         }
     }
 
